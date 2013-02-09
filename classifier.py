@@ -1,12 +1,13 @@
 import nltk
 from pymongo import MongoClient
 import re
+import time
 
+start_time = time.time()
 connection = MongoClient('localhost', 27017)
 db = connection.local
 sad_col = db['neg_emoticons']
 hap_col = db['pos_emoticons']
-results_col = db['~results_superbowl_test1']
 h= []
 s = []
 s=sad_col.find()
@@ -14,25 +15,27 @@ h = hap_col.find()
 pos_tweets = []
 neg_tweets = []
 for tweet_object_index in range(s.count()):
-  if tweet_object_index < 50:
+  if tweet_object_index < 1000:
     text =' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)","", s[tweet_object_index]['text']).split())
     neg_tweets.append((text, 'negative'))
   else:
     break
 for tweet_object_index in range(h.count()):
-  if tweet_object_index < 50:
+  if tweet_object_index < 1000:
 #    text= re.search(r'/\w+/', h[tweet_object_index]['text']).group()
     text =' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)","", h[tweet_object_index]['text']).split())
     pos_tweets.append((text, 'positive'))
   else:
     break
 
-#pos_tweets = [('I love this car', 'positive'),
- #             ('This view is amazing', 'positive')]
-#neg_tweets = [('I do not like this car', 'negative'),
- #             ('This view is horrible', 'negative')]
-
 tweets = []
+f = open('words.tff')
+for line in f.readlines():
+    t = line.split(' ')
+    word = t[2][6:]
+    sent = t[5][14:]
+    stemmed = t[4][9:] ###TODO
+    tweets.append(([word], sent))
 
 for (words, sentiment) in pos_tweets + neg_tweets:
   words_filtered =[e.lower() for e in words.split() if len(e) >= 3]
@@ -64,7 +67,7 @@ def extract_features(document):
   document_words = set(document)
   features = {}
   for word in word_features:
-    if type(word) is unicode:
+    if type(word) is unicode or type(word) is str:
       txt = word
     else:
       txt = ' '.join(word)
@@ -76,6 +79,7 @@ training_set = nltk.classify.apply_features(extract_features, tweets)
 classifier = nltk.NaiveBayesClassifier.train(training_set)
 print classifier.show_most_informative_features(100)
 
+print "training time: " + str(time.time()-start_time)
 #print nltk.classify.accuracy(classifier, test_set)
 
 t_cols = ["tweet_series_christmas0__01/31/13|||19:28:02",
@@ -105,8 +109,13 @@ t_cols = ["tweet_series_christmas0__01/31/13|||19:28:02",
 
 t_cols = ["tweet_superbowl0", "tweet_superbowl1", "tweet_superbowl2", "tweet_superbowl3", "tweet_superbowl4"]
 
+t_cols = []
+for i in range(11):
+  t_cols.append("marley_tweets"+str(i))
+
 #classify each tweet collection per (hour?)
 #t_classify_col = db["tweet_series_christmas4__02/01/13|||00:45:04"]
+results_col = db['~results_marley']
 for col in t_cols:
   t_classify_col = db[col]
   t=[]
@@ -114,7 +123,7 @@ for col in t_cols:
   neg_score = 0
   t=t_classify_col.find()
   for tweet_object_index in range(t.count()):
-    if tweet_object_index < 70:
+    if tweet_object_index < t.count():
       text =' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)","", t[tweet_object_index]['text']).split())
       label = classifier.classify(extract_features(text.split(' '))) 
   #    print label, text
@@ -129,4 +138,4 @@ for col in t_cols:
 #add positives 1.0, negatives -1.0, score them or average them on some function
 #plot these on a time series for a day
 
-
+print time.time() - start_time

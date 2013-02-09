@@ -12,12 +12,12 @@ t = Twython(app_key='tukYVvz2d4MIG4KCxObMkA',
                                                                                         oauth_token_secret='hVKkn8jlIyUQbKPnWXnlmdL4j8iM7FDI7LFOtzX40')
 
 sid = None
-for db_num in range(11): #start at an hour
-  collection = db['marley_tweets' + str(db_num) ]
+for db_num in range(24): #start at an hour
+  collection = db['nemo' + str(db_num) ]
   for x in range(327):
     print "Time remaining: " + str(datetime.timedelta(seconds=(327-x)*11)) + " on hour " + str(db_num)
     try:
-      tweets=t.search(q='Bob Marley OR #OneLove OR marley #bobmarley', count='100', lang='en', since_id=sid, result_type='recent')
+      tweets=t.search(q='nemo OR #nemo OR nyc OR #nyc OR #blizzard OR #snow OR winter storm OR blizzard OR snow', count='100', lang='en', since_id=sid, result_type='recent')
           #stock OR stocks OR market OR finance OR exchange OR economy', count='100', lang='en', since_id=sid, result_type='recent')
     except:
       time.sleep(110)
