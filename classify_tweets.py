@@ -21,10 +21,13 @@ def load_classifier_and_features(filec, filef):
     f.close()
     return classifier, word_features
 
-def select_collections(name, num_col):
+def select_collections(name, num_col, enum):
     t_cols = []
-    for i in range(num_col):
-        t_cols.append(name + str(i))
+    if enum:
+        for i in range(num_col):
+            t_cols.append(name + str(i))
+    else:
+        t_cols.append(name)
     return t_cols
 
 def extract_features(document):
@@ -39,8 +42,9 @@ def extract_features(document):
     return features
 
 
+
 classifier, word_features = load_classifier_and_features('classifier.pickle', 'features.pickle')
-tweet_collections = select_collections('oscars', 2)
+tweet_collections = select_collections('tech082', 0, False)
 results_collection = db['results']
 
 # classify each tweet collection per (hour?)
@@ -51,10 +55,10 @@ for col in tweet_collections:
     t = db[col].find()
 
     for tweet_object_index in range(t.count()):
-        if tweet_object_index < 1000:
+        if tweet_object_index < t.count():
             text = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", '', t[tweet_object_index]['text']).split())
             label = classifier.classify(extract_features(text.split(' ')))
-            print str(tweet_object_index) + ' / ' + str(1000)
+            print str(tweet_object_index) + ' / ' + str(t.count())
             if label == 'positive':
                 pos_score += 1
             elif label == 'negative':
@@ -71,7 +75,8 @@ for col in tweet_collections:
 ######################################################
         else:
             break
-    results_collection.insert({'collection': col, 'pos': str(pos_score), 'neut': str(neut_score), 'neg': str(neg_score)})
+        # results_collection.insert({'collection': col, 'time': t[tweet_object_index]['time'], 'pos': str(pos_score), 'neut': str(neut_score), 'neg': str(neg_score)})
+        results_collection.insert({'collection': col, 'time': t[tweet_object_index]['time'], 'text': t[tweet_object_index]['text'], 'sent': label})
 
     print "Pos: " + str(pos_score) + " | Neg: " + str(neg_score) + " | Neut: " + str(neut_score)
     # print "Pos pattern: " + str(posl_score) + " | Neg pattern: " + str(negl_score) + " | Neut: " + str(neutl_score)

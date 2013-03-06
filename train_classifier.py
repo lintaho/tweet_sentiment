@@ -6,6 +6,21 @@ from pymongo import MongoClient
 import re
 import time
 import pickle
+from nltk.corpus import stopwords
+
+
+# sw_file = open("stopwords.txt", "r")
+# stop_words = []
+# line = sw_file.readline()
+# while line:
+#     words = line.strip()
+#     stop_words.append(words)
+#     line = sw_file.readline()
+# sw_file.close()
+
+def remove_stopwords(text):
+    return [w for w in text if not w in stopwords.words('english')]
+
 
 start_time = time.time()
 connection = MongoClient('localhost', 27017)
@@ -20,15 +35,15 @@ h = hap_col.find()
 pos_tweets, neg_tweets = [], []
 
 for tweet_object_index in range(s.count()):
-    if tweet_object_index < 6281:
-        text = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", '', s[tweet_object_index]['text']).split())
+    if tweet_object_index < 2:
+        text = ' '.join(remove_stopwords(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\S+:\/\/\w+)", '', s[tweet_object_index]['text']).split()))
         neg_tweets.append((text, 'negative'))
     else:
         break
 
 for tweet_object_index in range(h.count()):
-    if tweet_object_index < 6281:
-        text = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", '', h[tweet_object_index]['text']).split())
+    if tweet_object_index < 2:
+        text = ' '.join(remove_stopwords(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", '', h[tweet_object_index]['text']).split()))
         pos_tweets.append((text, 'positive'))
     else:
         break
@@ -54,7 +69,7 @@ def add_XX_features():
     tweets.append((n, 'negative'))
     tweets.append((neut, 'netural'))
 
-def add_bigrams():
+def add_ngrams():
     for (words, sentiment) in pos_tweets + neg_tweets:
         words_filtered = [e.lower() for e in words.split() if len(e) >= 3]
         tweets.append((words_filtered, sentiment))
@@ -74,8 +89,10 @@ def get_word_features(wordlist):
     word_features = wordlist.keys()
     return word_features
 
-add_XX_features()
-add_bigrams()
+
+add_ngrams()
+
+#add_XX_features()
 word_features = get_word_features(get_words_in_tweets(tweets))
 
 def extract_features(document):
@@ -102,17 +119,59 @@ def save_features(document, feats):
     f.close()
     print 'features saved in ' + document
 
+def k_fold_validation(k, tweets):
+    sets = []
+    acc = 0.0
+    for i in range(k):
+        sets.append(tweets[(len(tweets) / k * i):(len(tweets) / k * i + len(tweets) / k)])
+        # print len(tweets[(len(tweets) / k * i):(len(tweets) / k * i + len(tweets) / k)])
+    for i in range(k):
+        training_tweets = []
+        test_tweets = sets[i]
+        for j in range(k):
+            if i != j:
+                training_tweets.extend(sets[j])
+        # print len(training_tweets), len(test_tweets)
+        training_set = nltk.classify.apply_features(extract_features, training_tweets)
+        test_set = nltk.classify.apply_features(extract_features, test_tweets)
+        del training_tweets
+        del test_tweets
+        print 'training ' + str(len(training_set))
+        classifier = nltk.NaiveBayesClassifier.train(training_set)
+        #  print test_set[0][1]
+        pos_score, neg_score, neut_score = 0, 0, 0
+        print 'finding accuracy...'
+        for i, tweet in enumerate(test_set):
+            label = classifier.classify(tweet[0])
+            if label == tweet[1]:
+                pos_score += 1
+            else:
+                neg_score += 1
+        # del training_set
+        acc = float(pos_score) / float(len(test_set))
+        print acc
+        save_classifier('classifier_xfold' + str(acc) + '.pickle', classifier)
+        #print nltk.classify.accuracy(classifier, test_set)
+
+# k_fold_validation(4, tweets)
+
+
 # test_tweets = tweets[:len(tweets)/5]
 # tweets = tweets[len(tweets)/5:]
 training_set = nltk.classify.apply_features(extract_features, tweets)
 # test_set = nltk.classify.apply_features(extract_features, test_tweets)
 
-print 'training ' + str(len(tweets))
-classifier = nltk.NaiveBayesClassifier.train(training_set)
+# classifier = nltk.SvmClassifier.train(training_set)
 
-print classifier.show_most_informative_features(100)
+
+
+print 'training ' + str(len(tweets))
+# classifier = nltk.NaiveBayesClassifier.train(training_set)
+classifier = nltk.classify.maxent.MaxentClassifier.train(training_set, 'GIS', trace=3, encoding=None, labels=None, sparse=True, gaussian_prior_sigma=0, max_iter = 10)
+
+classifier.show_most_informative_features(100)
 print 'training time: ' + str(time.time() - start_time) + ' seconds'
 #print nltk.classify.accuracy(classifier, test_set)
 
-save_classifier('classifier.pickle', classifier)
+save_classifier('classifier_xfoldtest.pickle', classifier)
 save_features('features.pickle', word_features)

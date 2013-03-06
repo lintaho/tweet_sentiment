@@ -6,7 +6,7 @@ import time
 from datetime import datetime
 connection = MongoClient('localhost', 27017)
 db = connection.data
-collection = db['tweet_series']
+#collection = db['tweet_series']
 
 t = Twython(app_key='tukYVvz2d4MIG4KCxObMkA',
             app_secret='uxJwgj45Qi1lbuqz6FuYcZJsTvpKG6fGab46BBsZ28',
@@ -15,7 +15,9 @@ t = Twython(app_key='tukYVvz2d4MIG4KCxObMkA',
             )
 
 sid = None
-query = 'social media OR technology OR microsoft OR internet OR $AAPL OR $MSFT OR amazon OR yahoo'
+query = 'technology OR stocks'
+# tech stocks OR tech etfs OR technology stocks OR technology industry OR tech sector OR technology sector OR tech industry OR IT industry OR IT stocks'
+ #       OR internet stocks OR internet OR apple'
 
 while True:
     now = datetime.now().strftime('%H%M')
@@ -31,6 +33,7 @@ while True:
                              result_type='recent')
             except:
                 time.sleep(110)
+                print 'rate limited'
                 x += 10
                 continue
             for i in range(len(tweets['statuses'])):
