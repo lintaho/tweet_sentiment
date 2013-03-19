@@ -3,11 +3,15 @@
 
 import nltk
 from pymongo import MongoClient
+import random
 import re
 import time
+import collections
 import pickle
 from nltk.corpus import stopwords
-
+from nltk.metrics import BigramAssocMeasures
+from nltk.probability import FreqDist, ConditionalFreqDist
+from svmutil import *
 
 # sw_file = open("stopwords.txt", "r")
 # stop_words = []
@@ -35,18 +39,66 @@ h = hap_col.find()
 pos_tweets, neg_tweets = [], []
 
 for tweet_object_index in range(s.count()):
-    if tweet_object_index < 2:
+    if tweet_object_index < 10:
         text = ' '.join(remove_stopwords(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\S+:\/\/\w+)", '', s[tweet_object_index]['text']).split()))
         neg_tweets.append((text, 'negative'))
     else:
         break
 
 for tweet_object_index in range(h.count()):
-    if tweet_object_index < 2:
+    if tweet_object_index < 10:
         text = ' '.join(remove_stopwords(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", '', h[tweet_object_index]['text']).split()))
         pos_tweets.append((text, 'positive'))
     else:
         break
+
+
+# negWords, posWords = [], []
+# for t in neg_tweets:
+#     negWords.append(t[0].split())
+# for t in pos_tweets:
+#     posWords.append(t[0].split())
+
+# # print negWords
+# negWords = list(itertools.chain(*negWords))
+# posWords = list(itertools.chain(*posWords))
+
+
+
+def get_freqs(posWords, negWords):
+    word_fd = FreqDist()
+    cond_word_fd = ConditionalFreqDist()
+    for word in posWords:
+        # print word
+        word_fd.inc(word.lower())
+        cond_word_fd['pos'].inc(word.lower())
+    for word in negWords:
+        word_fd.inc(word.lower())
+        cond_word_fd['neg'].inc(word.lower())
+
+    pos_word_count = cond_word_fd['pos'].N()
+    neg_word_count = cond_word_fd['neg'].N()
+    total_word_count = pos_word_count + neg_word_count
+
+    # print pos_word_count, neg_word_count, total_word_count
+
+    word_scores = {}
+    for word, freq in word_fd.iteritems():
+        pos_score = BigramAssocMeasures.chi_sq(cond_word_fd['pos'][word], (freq, pos_word_count), total_word_count)
+        neg_score = BigramAssocMeasures.chi_sq(cond_word_fd['neg'][word], (freq, neg_word_count), total_word_count)
+        word_scores[word] = pos_score + neg_score
+    return word_scores
+
+def find_best_words(word_scores, number):
+    best_vals = sorted(word_scores.iteritems(), key=lambda (w, s): s, reverse=True)[:number]
+    best_words = set([w for w, s in best_vals])
+    return best_words
+
+def best_word_features(words):
+    return dict([('contains ' + word, True) for word in words if word in best_words])
+
+# best_words = find_best_words(word_scores, 1000)
+# bwf = best_word_features(best_words)
 
 tweets = []
 
@@ -69,14 +121,16 @@ def add_XX_features():
     tweets.append((n, 'negative'))
     tweets.append((neut, 'netural'))
 
-def add_ngrams():
-    for (words, sentiment) in pos_tweets + neg_tweets:
+def add_ngrams(tweetlist):
+    t_list = []
+    for (words, sentiment) in tweetlist:
         words_filtered = [e.lower() for e in words.split() if len(e) >= 3]
-        tweets.append((words_filtered, sentiment))
+        t_list.append((words_filtered, sentiment))
         bg = nltk.util.bigrams(words_filtered)
-        tweets.append((bg, sentiment))
+        t_list.append((bg, sentiment))
         tg = nltk.util.trigrams(words_filtered)
-        tweets.append((tg, sentiment))
+        t_list.append((tg, sentiment))
+    return t_list
 
 def get_words_in_tweets(tweets):
     all_words = []
@@ -90,7 +144,15 @@ def get_word_features(wordlist):
     return word_features
 
 
-add_ngrams()
+tweets = pos_tweets + neg_tweets
+
+random.shuffle(tweets)
+test_tweets = tweets[:len(tweets) / 5]
+tweets = tweets[len(tweets) / 5:]
+tweets = add_ngrams(tweets)
+test_tweets = add_ngrams(test_tweets)
+
+# print tweetlist
 
 #add_XX_features()
 word_features = get_word_features(get_words_in_tweets(tweets))
@@ -118,6 +180,32 @@ def save_features(document, feats):
     pickle.dump(feats, f)
     f.close()
     print 'features saved in ' + document
+
+
+def get_svm_features(tweets, featureList):
+    sortedFeatures = sorted(featureList)
+    map = {}
+    # print tweets
+    feature_vector = []
+    labels = []
+    for t in tweets:
+        label = 0
+        map = {}
+        for w in sortedFeatures:
+            map[w] = 0
+        tweet_words = t[0]
+        tweet_opinion = t[1]
+        for word in tweet_words:
+            if word in map:
+                map[word] = 1
+        values = map.values()
+        feature_vector.append(values)
+        if tweet_opinion == 'positive':
+            label = 0
+        elif tweet_opinion == 'negative':
+            label = 1
+        labels.append(label)
+    return {'feature_vector': feature_vector, 'labels': labels}
 
 def k_fold_validation(k, tweets):
     sets = []
@@ -156,22 +244,53 @@ def k_fold_validation(k, tweets):
 # k_fold_validation(4, tweets)
 
 
-# test_tweets = tweets[:len(tweets)/5]
-# tweets = tweets[len(tweets)/5:]
+
+result = get_svm_features(tweets, word_features)
+
+problem = svm_problem(result['labels'], result['feature_vector'])
+param = svm_parameter('-q')
+param.kernel_type = LINEAR
+classifier = svm_train(problem, param)
+
+test_feature_vector = get_svm_features(test_tweets, word_features)
+
+
+p_labels, p_accs, p_vals = svm_predict(test_feature_vector['labels'], test_feature_vector['feature_vector'], classifier)
+
+
+referenceSets = collections.defaultdict(set)
+testSets = collections.defaultdict(set)
+
+
+
 training_set = nltk.classify.apply_features(extract_features, tweets)
-# test_set = nltk.classify.apply_features(extract_features, test_tweets)
+test_set = nltk.classify.apply_features(extract_features, test_tweets)
 
 # classifier = nltk.SvmClassifier.train(training_set)
 
 
 
 print 'training ' + str(len(tweets))
-# classifier = nltk.NaiveBayesClassifier.train(training_set)
-classifier = nltk.classify.maxent.MaxentClassifier.train(training_set, 'GIS', trace=3, encoding=None, labels=None, sparse=True, gaussian_prior_sigma=0, max_iter = 10)
+classifier = nltk.NaiveBayesClassifier.train(training_set)
+#classifier = nltk.classify.maxent.MaxentClassifier.train(training_set, 'GIS', trace=3, encoding=None, labels=None, sparse=True, gaussian_prior_sigma=0, max_iter=1)
 
-classifier.show_most_informative_features(100)
+
+
+for i, (features, label) in enumerate(test_set):
+    # print features, i
+    referenceSets[label].add(i)
+    predicted = classifier.classify(features)
+    testSets[predicted].add(i)
+
+print 'pos precision:', nltk.metrics.precision(referenceSets['positive'], testSets['positive'])
+print 'pos recall:', nltk.metrics.recall(referenceSets['positivenegative'], testSets['positivenegative'])
+print 'neg precision:', nltk.metrics.precision(referenceSets['negative'], testSets['negative'])
+print 'neg recall:', nltk.metrics.recall(referenceSets['negative'], testSets['negative'])
+
+
+classifier.show_most_informative_features(10)
 print 'training time: ' + str(time.time() - start_time) + ' seconds'
-#print nltk.classify.accuracy(classifier, test_set)
+print nltk.classify.accuracy(classifier, test_set)
 
 save_classifier('classifier_xfoldtest.pickle', classifier)
 save_features('features.pickle', word_features)
