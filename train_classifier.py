@@ -38,15 +38,20 @@ h = hap_col.find()
 
 pos_tweets, neg_tweets = [], []
 
+if len(sys.argv) > 2:
+    count = int(sys.argv[2])
+else:
+    count = 20
+
 for tweet_object_index in range(s.count()):
-    if tweet_object_index < 10:
+    if tweet_object_index < count:
         text = ' '.join(remove_stopwords(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\S+:\/\/\w+)", '', s[tweet_object_index]['text']).split()))
         neg_tweets.append((text, 'negative'))
     else:
         break
 
 for tweet_object_index in range(h.count()):
-    if tweet_object_index < 10:
+    if tweet_object_index < count:
         text = ' '.join(remove_stopwords(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", '', h[tweet_object_index]['text']).split()))
         pos_tweets.append((text, 'positive'))
     else:
@@ -145,7 +150,7 @@ def get_word_features(wordlist):
 
 
 tweets = pos_tweets + neg_tweets
-
+num_trained = len(tweets)
 random.shuffle(tweets)
 test_tweets = tweets[:len(tweets) / 5]
 tweets = tweets[len(tweets) / 5:]
@@ -244,53 +249,65 @@ def k_fold_validation(k, tweets):
 # k_fold_validation(4, tweets)
 
 
-
-result = get_svm_features(tweets, word_features)
-
-problem = svm_problem(result['labels'], result['feature_vector'])
-param = svm_parameter('-q')
-param.kernel_type = LINEAR
-classifier = svm_train(problem, param)
-
-test_feature_vector = get_svm_features(test_tweets, word_features)
-
-
-p_labels, p_accs, p_vals = svm_predict(test_feature_vector['labels'], test_feature_vector['feature_vector'], classifier)
-
-
-referenceSets = collections.defaultdict(set)
-testSets = collections.defaultdict(set)
-
-
-
 training_set = nltk.classify.apply_features(extract_features, tweets)
 test_set = nltk.classify.apply_features(extract_features, test_tweets)
 
-# classifier = nltk.SvmClassifier.train(training_set)
 
 
 
-print 'training ' + str(len(tweets))
-classifier = nltk.NaiveBayesClassifier.train(training_set)
-#classifier = nltk.classify.maxent.MaxentClassifier.train(training_set, 'GIS', trace=3, encoding=None, labels=None, sparse=True, gaussian_prior_sigma=0, max_iter=1)
+def train_svm():
+    print 'training svm classifier with ' + str(num_trained) + ' tweets'
+    result = get_svm_features(tweets, word_features)
+    problem = svm_problem(result['labels'], result['feature_vector'])
+    param = svm_parameter('-q')
+    param.kernel_type = LINEAR
+    classifier = svm_train(problem, param)
+    test_feature_vector = get_svm_features(test_tweets, word_features)
+    p_labels, p_accs, p_vals = svm_predict(test_feature_vector['labels'], test_feature_vector['feature_vector'], classifier)
 
+    return classifier
 
+def train_naive_bayes():
+    print 'training naive bayes classifier with ' + str(num_trained) + ' tweets'
+    classifier = nltk.NaiveBayesClassifier.train(training_set)
+    return classifier
 
-for i, (features, label) in enumerate(test_set):
-    # print features, i
-    referenceSets[label].add(i)
-    predicted = classifier.classify(features)
-    testSets[predicted].add(i)
+def train_maxent():
+    print 'training max ent classifier with ' + str(num_trained) + ' tweets'
+    classifier = nltk.classify.maxent.MaxentClassifier.train(training_set, 'GIS', trace=3, encoding=None, labels=None, sparse=True, gaussian_prior_sigma=0, max_iter=10)
+    return classifier
 
-print 'pos precision:', nltk.metrics.precision(referenceSets['positive'], testSets['positive'])
-print 'pos recall:', nltk.metrics.recall(referenceSets['positivenegative'], testSets['positivenegative'])
-print 'neg precision:', nltk.metrics.precision(referenceSets['negative'], testSets['negative'])
-print 'neg recall:', nltk.metrics.recall(referenceSets['negative'], testSets['negative'])
+def calc_prec_recall(classifier):
+    referenceSets = collections.defaultdict(set)
+    testSets = collections.defaultdict(set)
 
+    for i, (features, label) in enumerate(test_set):
+        # print features, i
+        referenceSets[label].add(i)
+        predicted = classifier.classify(features)
+        testSets[predicted].add(i)
 
-classifier.show_most_informative_features(10)
-print 'training time: ' + str(time.time() - start_time) + ' seconds'
-print nltk.classify.accuracy(classifier, test_set)
+    print 'pos precision:', nltk.metrics.precision(referenceSets['positive'], testSets['positive'])
+    print 'pos recall:', nltk.metrics.recall(referenceSets['positivenegative'], testSets['positivenegative'])
+    print 'neg precision:', nltk.metrics.precision(referenceSets['negative'], testSets['negative'])
+    print 'neg recall:', nltk.metrics.recall(referenceSets['negative'], testSets['negative'])
 
-save_classifier('classifier_xfoldtest.pickle', classifier)
-save_features('features.pickle', word_features)
+def show_stats(classifier):
+    classifier.show_most_informative_features(10)
+    print 'training time: ' + str(time.time() - start_time) + ' seconds'
+    print 'accuracy: ' + str(nltk.classify.accuracy(classifier, test_set))
+
+if str(sys.argv[1]) == '1':
+    classifier = train_svm()
+elif str(sys.argv[1]) == '2':
+    classifier = train_maxent()
+    calc_prec_recall(classifier)
+    show_stats(classifier)
+    save_classifier('classifier_xfoldtest.pickle', classifier)
+    save_features('features.pickle', word_features)
+else:
+    classifier = train_naive_bayes()
+    calc_prec_recall(classifier)
+    show_stats(classifier)
+    save_classifier('classifier_xfoldtest.pickle', classifier)
+    save_features('features.pickle', word_features)

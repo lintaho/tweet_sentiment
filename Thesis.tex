@@ -1,0 +1,340 @@
+% article.tex, a sample LaTeX file.
+% Run LaTeX on this file twice for proper section numbers.
+% A '%' causes LaTeX to ignore remaining text on the line
+
+% Use the following line for draft mode (double spaced, single column)
+%\documentclass[preprint,pre,floats,aps,amsmath,amssymb]{revtex4}
+
+% Use the following line for journal mode (single spaced, double column)
+\documentclass[preprint,pre,floats,aps,amsmath,amssymb,12pt]{revtex4}
+\usepackage{graphicx}
+\usepackage{bm}
+
+\begin{document}
+
+\title{Twitter Sentiment Analysis and Stock Price and Keyword Correlation}
+\author{Linhao Zhang}
+\affiliation{Department of Computer Science, The University of Texas at Austin}
+\date{\today}
+
+\begin{abstract}
+
+Though uninteresting individually, Twitter messages, or tweets, can provide an accurate reflection of public sentiment on when taken in aggregation. In this paper, we apply sentiment analysis and machine learning principles to accomplish two tasks. We first look for a correlation between twitter sentiment and stock prices and volatility. Secondly, we determine which words in tweets correlate to changes in stock prices by doing a post analysis of price change and tweets. We accomplish this task by mining tweets using their search API and subsequently processing them for analysis. For the task of determining sentiment, we primarily examine the effectiveness of three machine learning techniques: Naive Bayes classification, Maximum Entropy classification, and Support Vector Machines. We discover that SVMs give the highest consistent accuracy through cross validation. $ADD CORRELATION SENTENCE$ Lastly, we discuss various challenges posed by looking at twitter for performing stock predictions. 
+
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+\label{sec:intro}
+
+
+
+
+\section{Related Work}
+\label{sec:rel}
+The proliferation of online documents and user generated texts has led to a recent growth in research in the area of sentiment analysis and its relationship to financial markets. A broad overview of some of the machine learning techniques used in sentiment classification is provided in [Pang]. There, they investigate methods in determining whether movie reviews are positive or negative and examine some challenges in sentiment mining. They provide an overview of Naive Bayes, Maximum Entropy, and Support Vector Machine classification techniques in the movie review domain. 
+
+[Pak] discusses the use of Twitter specifically as a corpus for sentiment analysis. They discuss the methods of tweet gathering and processing. The authors use specific emoticons to form a training set for sentiment classification, a technique that greatly reduces manual tweet tagging. Their training set was split into positive and negative samples based on happy and sad emoticons. This paper borrows from this idea. Additionally, they analyze a few accuracy improvement methods. Similarly, [Bifet] presents a discussion of streaming Tweet mining and sentiment extraction, while furthering the discussion to include opinion mining. 
+
+[Bollen et Al] presented one of the first indications that there may be a correlation between Twitter sentiment and the stock market. In their work, a sentiment score is correlated with the DJIA and then fed into a neural network to predict market movements. The authors use a mood tracking tool named OpinionFinder to measure mood in 6 dimensions (Calm, Alert, Sure, Vital, Kind, and Happy). Then, they correlate the mood time series with DJIA closing values by using a Self Organizing Fuzzy Neural Network. Using their techniques, they measured an improvement on DJIA prediction accuracy. After publication, this paper launched much of the current research in the relationship between twitter and market sentiments. 
+
+A few other techniques in the area have been proposed. [1] provides a method in which tweets are screened for stock symbols, then sentiment is gathered using Naïve Bayes over an existing dataset. Their research continues and is still in the data collection phase. [2] combines sentiment gathered from news with technical features of stock data. Sentiment is analyzed using SentiWordNet 3.0 [7], a lexical resource for opinion mining. Instead of Twitter, they scrape data from Engadget. Multiple kernel learning is run to find the best coefficients for the different factors in their system for stock prediction. The authors found that training a model based on more than technical stock indicators improved stock prediction performance. 
+
+[6] achieves a 75\% accurate prediction mechanism using Self Organizing Fuzzy Neural Networks on Twitter and DJIA feeds. In their research, they created a custom questionnaire with words to analyze tweets for their sentiment. Their work is similar to [Bollen et Al], with a few minor modifications.
+
+On a side note, [14] discusses some common problems involved in many of the techniques presented above. These include, but are not limited to: insufficient data, inaccurate measures of performance, and inappropriate scaling. 
+
+The techniques proposed by these papers provide an interesting overview of sentiment analysis and how it can relate to the stock market. However, the results seem varied and may depend heavily on the accuracy of a twitter sentiment classifier. Additionally, the market and keywords used are not detailed in most of these papers, which may play a big role in determining whether or not the system is effective in stock prediction. In this work, we build off some of these previous works to build a sentiment analyzer. However, in addition to correlating stock price, we look for correlations in particular words in tweets that indicate positive and negative market movements after-the-fact. 
+
+\section{Proposed Model}
+\label{sec:model}
+
+$Insert figure of proposed model$
+
+\section{Corpus Collection}
+\label{sec:mining}
+To train a sentiment analzyer and obtain data, we needed a system to collect tweets. Therefore, we first worked to collect a corpus of tweets that would serve as training data for our sentiment analyzer. 
+
+It was decided that we would categorize tweets as "positive" or "negative." At first, we were unsure of whether or not to include a "neutral" sentiment label, but after [5] reported a significant decrease in sentiment accuracy when a "neutral" category was included, we decided to keep our analyzer to just "positive" or "negative." 
+
+At first, we considered manually tagging tweets with a "positive" or "negative" label. [http://www.sananalytics.com] does sentiment analysis based off a database of 5513 hand-classified tweets. A search for other tweet corpuses returned no results, as Twitter had recently modified its terms of service to disallow public hosting of old tweets. We decided that tagging tweets manually would work, but there were better methods in which to form a training set. In the end, we decided to emulate a technique proposed in [Pak] to collect a corpus with positive and negative sentiments without any manual effort for classification. To do this, we employed use of Twitters Search API. 
+
+\subsection{Twitter Search/Streaming API}
+For tweet collection, Twitter provides a rather robust API. There are two possible ways to gather Tweets: the Streaming API or the Search API. The Streaming API allows users to obtain real-time access to tweets from an input query. The user first requests a connection to a stream of tweets from the server. Then, the server opens a streaming connection and tweets are streamed in as they occur, to the user. 
+
+However, there are a few limitations of the Streaming API. First, language is not specifiable, resulting in a stream that contains Tweets of all languages, including a few non-Latin based alphabets. Additionally, at the free level, the streamed Tweets are only a small fraction of the actual Tweet body (gardenhose vs. firehose). Initial testing with the streaming API resulted in a polluted training set as it proved difficult to obtain a pure dataset of Tweets.
+
+Because of these issues, we decided to go with the Twitter Search API instead. The Search API is a REST API which allows users to request specific queries of recent tweets. The Search API allows more fine tuning of queries, including filtering based on language, region, and time. There is a rate limit associated with the query, but we handle it in the code. For our purposes, the rate limit has not been an issue. To actually fetch tweets, we continuously send queries to the Search API, with a small delay to account for the rate limit. The query is constructed by stringing separate keywords together with an "OR" in between. Though this is also not a fully complete result, it returns a well filtered set of tweets that is useful for our sentiment analyzer. 
+
+The request returns a list of JSON objects that contain the tweets and their metadata. This includes a variety of information, including username, time, location, retweets, and more. For our purposes, we mainly focus on the time and tweet text. 
+
+Both of these APIs are require the user have an API key for authentication. Once authenticated, we were able to easily access the API through a python library called Twython- a simple wrapper for the Twitter API.
+
+\subsection{Training Set Collection}
+Using Twitter's search API, we formed two separate datasets (collections of Tweets) for training: "positive" and "negative." Each dataset was formed programmatically and based on positive and negative queries on emoticons and keywords:
+
+\begin{itemize}
+\item Positive sentiment query: ":) OR :-) OR =) OR :D OR <3 OR like OR love"
+\item Negative sentiment query: ":( OR =( OR hate OR dislike"
+\end{itemize}
+
+The reasoning behind these keywords is straightforward. The tweets that contained these keywords or emoticons were most likely to be of that corresponding sentiment. This results in a training set of "positive" and "negative" tweets that was nearly as good as manual tagging. Another advantage of programmatically mining tweets with prior sentiment is that we were able to mine many, many more. In all, we gathered over 500,000 tweets of each sentiment. Unfortunately, I did not have the computational power to train over all the tweets, but the sample size was definitely increased from manually annotating tweets with a sentiment label. 
+
+\subsection{MongoDB Storage}
+
+To save our training tweet data, we used MongoDB. MongoDB is a document based database in which data is stored as JSON-like objects. Naturally, this works well with the tweet objects returned from the API. Each tweet is simply stored as a record in a collection in the database. Not all the data is stored, though- only relevant information, including tweet text and date. Querying the MongoDB database is simple as well- one iterator simply crawls through an entire collection of tweets during training and classification tasks.  
+
+\section{Tweet Text Processing}
+\label{sec:txt}
+
+The text of each tweet contains many extraneous words that do not contribute to its sentiment. Many tweets include URLS, tags to other users, or symbols that have no meaning. To accurately obtain a tweet's sentiment, we first need to filter the noise from its original state. To do this, we incorporate a variety of techniques.
+
+$Insert table here containing tweet examples$
+
+\subsection{Tokenization}
+
+The first step involves splitting the text by spaces, forming a list of individual words per text. This is also called a bag of words. We will later use each word in the tweet as features to train our classifier. 
+
+\subsection{Removing Stopwords}
+
+Next, we remove stopwords from the bag of words. Python's Natural Language Toolkit library contains a stopword dictionary. To remove the stopwords from each text, we simply check each word in the bag of words against the dictionary. If a word is a stopword, we filter it out. The list of stopwords contains articles, some prepositions, and other words that add no sentiment value (able, also, or, etc.)
+
+\subsection{Twitter Symbols}
+
+Many tweets contain extra symbols such as "@" or \"\#," as well as URLs. The word immediately following an "@" symbol is always a username, which we filter out entirely, as they add no value to the text. Words following \"\#" are kept, for they may contain information about the tweet, especially for categorization. URLs are filtered out entirely, as they add no sentiment meaning to the text. To accomplish all of this, we use a regex that matches for these symbols.  Additionally, any non-word symbols in the bag of words are filtered out as well.
+
+\section{Training the Classifiers}
+\label{sec:train}
+
+Once we gather a large tweet corpus with "positive" and "negative" sentiment, we can build and train a classifier. We examine three types of classifiers: Naive Bayes, Maximum Entropy, and Support Vector Machine. For each, we extract the same features from the Tweets to classify on.
+
+\subsection{Feature Extraction}
+Features were chosen based on simplicity and results from previous works in the area. The process of choosing which features to use was not straightforward. Eventually, we settled upon building our featureset purely on whether or not certain N-grams exist within the tweet. 
+
+\subsubsection{Unigrams}
+A unigram is simply an N-gram of size one, or a single word. For each unique word in a tweet, a unigram feature is created for the classifier. For example, if a positive tweet contains the word "market," a feature for classification would be whether or not a tweet contains the word "market." Since the feature came from a positive tweet, the classifier would be more likely to classify other tweets containing the word "market" as positive. 
+
+\subsubsection{N-grams}
+We extract bigrams and trigrams from our tweets as features to train our classifier. Bigrams are pairs of consecutive words, which adds to the accuracy of the classifier by distinguishing words such as "don't like" or "not happy." Similarly, Trigrams are triplets of consecutive words. These too add to the information coverage of the classifier. In our N-grams, gap skipping is not allowed, and the words must follow each other. When we add bigrams and trigrams, we increase the features in our featureset by $n-1$ for bigrams and $n-2$ for trigrams, where $n$ is the number of individual words amongst all of the tweets in our corpora. Though this greatly increases training and classification time, [$CITE$]'s work as well as our own experimental classifiers show us that bigrams and trigrams increase the accuracy of the classifier. 
+
+\subsubsection{External Lexicon}
+We feed in features from an external lexicon called SentiStrength $CITE$, which is a list of words that are predefined with a sentiment, either positive or negative. Their data is applied to "short texts," which is perfect for short things. The inclusion of the SentiStrength Lexicon allows for a broader coverage of words that may be missed by merely collecting from Tweets. We spent time looking into more freely available lexicons, and discovered that there are far too many to be able to feasibly measure the effectiveness of each of them. Therefore, we decided that lexicon analysis was out of scope for this paper and are only including SentiStrength in our classifier featureset. 
+
+\subsubsection{Part of Speech Tagging}
+Other works attempt to use Part of Speech Tagging to varying degrees of success. Part of Speech Tagging involves marking up words in a tweet with a corresponding part of speech, as well as its context. With that information, certain features can theoretically be eliminated or more heavily weighted $CITE$'s work stated that they did not find any significant classification improvement using this technique. Therefore, while we did tinker with a system that allowed part of speech tagging on tweets, we decided that it was ultimately not worth the additional effort, and left it out of our design. 
+
+\subsubsection{Neutral Labels}
+We considered applying a third label, "neutral," as a possible classification for our tweets. However, we ran into a few challenges and found evidence against using this label. First, it proved difficult to gather "neutral" tweets. We considered scraping objective news tweet streams, such as the Wall Street Journal or New York Times, but guessed that the words gathered would largely be domain specific and add much to the classifier. Additionally, [$cite$]'s work showed that adding a third "neutral" label to a classifier in fact decreased its accuracy and was not beneficial for their system. In the spirit of simplicity, we decided to follow suit and not use a "neutral" label in our classifier.
+
+Of course, there are downsides to simply categorizing every tweet as "positive" or "negative." In future work, we definitely will consider adding other dimensions of sentiment beyond positive and negative. 
+
+\subsection{Classifiers}
+Accurate classification is still an interesting problem in machine learning and data mining. Many times, we want to build a classifier with a set of training data and labels. In our case, we want to construct a classifier that is trained on our "positive" and "negative" labeled tweet corpus. From this, the classifier will be able to label future tweets as either "positive" or "negative," based on the tweet's attributes or features. Here, we examine three common classifiers used for text classification: Naive Bayes, Maximum Entropy, and Support Vector Machines. In each of these classifiers, previous work has demonstrated a certain level of effectiveness in text classification. 
+
+In the following examples, $c$ will represent the class label, which in our case is either "positive" or "negative," an $f_{i}$ represents a feature in the featureset $F$. 
+
+
+\subsubsection{Naive Bayes}
+A Naive Bayes classifier is probabilistic classifier based on Bayes Rule, and the simplest form of a Bayesian network. The classifier is simple to implement and widely used in many applications. The classifier operates on an underlying "naive" assumption of independence about each feature in its featureset.
+
+The classifier is an application of Bayes Rule:
+\[ P(c|F) = \frac{P(F|c) P(c)}{P(F)} \]
+
+In our context, the we are looking for a class, $c$, so we find the most probable class given features, $F$. We can treat the denominator, $P(F)$ as a constant, for it does not depend on $c$ and the values are provided. Therefore, we must focus on solving the numerator. To do this, we need to determine the value of $P(F|c)$. Here is where the independence assumption comes in. We assume that the features are independent of each other, therefore:
+
+\[ P(f_{1}, f_{2} \ldots f_{n}|c_{j}) = \prod_{i} P(f_{i} | c_{j}) \]
+
+From this, we can classify a tweet with a label $c^{*}$ with a maximum a posterior decision rule taking the most probable label from all labels $C$. 
+
+\[\ c^{*} = \arg\max_{c_{j} \in C} P(c_{j})
+\prod_{i} P(f_{i} | c_{j}) \]	
+
+The Naive Bayes classifier is extremely simple, and its conditional independence assumptions are not realistic in the real world. However, applications of Naive Bayes classifiers have performed well, better than initially imagined. Past work from [$cite Zhang wiki$] discusses the surprising performance of the Naive Bayes classifier and proposes that the distribution of dependencies among all attributes over a class leads to an optimal classification. 
+
+However, we also looked at a few other, more sophisticated classifiers as alternatives, and later evaluate the performance of each. 
+
+\subsubsection{Maximum Entropy}
+
+A second classifier that we used is the Maximum Entropy classifier, or MaxEnt. Though less popular than the Naive Bayes classifier, the MaxEnt classifier removes independence assumptions between features, even with a one to one featureset mapping. This advantage leads the classifier to perform better than Naive Bayes in certain situations. 
+In a maximum entropy model, each feature corresponds to a constraint on the model. The classifier computes the maximum entropy value from all the models that satisfy the constraints of the features. The features of a MaxEnt classifier are usually restricted to binary functions that characterize a specific feature its class.
+
+The MaxEnt estimation of $P(c | f)$ has the parametric form:
+			
+\[ P(c | f) = \frac{1}{Z(f)}\exp \left((\displaystyle\sum\limits_{i} \lambda_{i,c} F_{i,c}(f,c)\right)\]
+
+In this equation, $Z(d)$ is a normalization function, and $F_{i,c}$ is a binary function that takes as input a feature and a class label. It is defined as:
+\[ F_{i,c}(f,c') =  \left\lbrace
+\begin{array}{lr}
+1,\ n(f) > 0 $ and $  c' = c \\
+0 \ $otherwise$	 
+\end{array}
+\right.\]
+
+This binary function is trigged when a certain feature (unigram, bigram, etc.) exists and the sentiment is hypothesized in a certain way. Again, this makes no assumptions about the conditional relationships between each feature. 
+
+The $\lambda$ is a vector of weight parameters for the featureset. These parameter variables are estimated by a technique called Generalized Iterative Scaling, or GIS. GIS iteratively updates the values for the parameters that satisfy the tweets feature constraints while continuing to maximize the entropy of the model. Eventually, the iterations converge the model to an optimal maximum entry for the probability distribution. In our context, we iterate a maximum of 10 times to train our classifier. Practically, for this, the time it takes to train increases greatly compared to a Naive Bayes classifier.
+
+\subsubsection{Support Vector Machine}
+
+The third classifier we use in our analysis is the Support Vector Machine, or SVM. In previous works, SVMs have been shown to be very effective for text categorization. The SVM is a classifier that attempts to find a separation between a linearly separable set of data, with as wide of a gap as possible between them, called a margin. Unlike the Naive Bayes and MaxEnt classifiers, the SVM is a margin classifier, rather than probabilistic. With an input training set, the SVM finds the hyperplane such that each point is correctly classified and the hyperplane is maximally far from the closest points. The name "support vector" comes from points on the margin between the hyerplane and the nearest data points, which are called support vectors. 
+The SVM looks for a parameter vector $/alpha$ that, again, maximizes the distance between the hyperplane and every training point. In essence, it is an optimization problem:
+
+\[ \text{Minimize} \ \frac{1}{2} \alpha \cdot \alpha \]
+\[\text{s.t.} \ c_{i}(\alpha\cdot f_{i} + b) \geq 1 \ \ \  \forall1,\ldots, n \]
+
+Here, $c_{i}$ is the class label, $\{1, -1\}$ for positive and negative, that corresponds to the training feature vector $f_{i}$. One property to note is that the distance of any of the training points from the hyperplane margin will be no less than $\frac{1}{||\alpha||}$.
+The solution of the problem can be written as:
+
+\[ w = \displaystyle\sum\limits_{j} \alpha_{j} c_{j} d_{j}, \ \alpha_{j} \geq 0 \]
+
+Once the SVM is built, classification of new tweets simply involves determining which side of the hyperplane that they fall on. 
+In our case, there are only two classes, which simplifies the SVM to a linear classifier. However, the SVM is flexible enough in non-linear situations using the kernel trick, which transforms their input into a higher dimensional space.
+
+\section{Classifier Evaluation}
+\label{sec:eval}
+
+To continue to our ultimate goal of applying Twitter sentiment to the financial market, we trained and tested each of our classifiers on a subset of our tweet corpus. Though we gathered a few hundred thousand tweets, we were only able to train on a seven thousand, due to memory constraints. In the future, work on memory optimizations and more powerful or distributed machines should allow us to train on more data. 
+
+For each of the classifiers, performed a 5-fold cross validation and found the average accuracy. N-fold cross validation means splitting the training data into N sets. One of those sets is left out as a test set to measure accuracy, and the N-1 other sets are used to train the classifier. This is repeated N total times, one for each separate data partition. Afterwards, the accuracies were averaged and reported. 
+
+Additionally, we measured precision and recall values for each of the labels, "positive" and "negative". Precision here is measured as the number of true correct results over the all the positive results, or: 
+
+\[\text{Precision} = \frac{tp}{tp + fp}\]
+
+where $tp$ means true positive (correct result) and $fp$ means false positive (undesired result).
+
+Recall is the true positive rate of the classifier, and is measured as:
+
+\[\text{Recall} = \frac{tp}{tp + fn}\]
+
+where $fn$ means false negative (missing result).
+
+
+\subsection{Naive Bayes}
+
+With the Naive Bayes classifier, 5-fold cross validation yielded an average accuracy of $accuracy$. These results will be discussed more when I have them.
+
+\subsection{Maximum Entropy}
+
+
+With the Maximum Entropy classifier, 5-fold cross validation yielded an average accuracy of $accuracy$. These results will be discussed more when I have them.
+
+
+\subsection{Support Vector Machine}
+
+
+With the Support Vector Machine, 5-fold cross validation yielded an average accuracy of $accuracy$. These results will be discussed more when I have them.
+
+A summary of our results $Insert Table of Results$
+
+ 
+\section{Market Correlation}
+\label{sec:corr}
+
+After training and saving our classifier, we were able to begin looking at correlation between tweet sentiment and stock market prices. To do so, we first had to build a system to collect stock data, as well as tweets during market hours. For the scope of the project, we decided to look for intraday correlation with a lag period of $k$ minutes. Additionally, we focused our scope only on technology stocks. Therefore, we gathered minute by minute data on a few of the most popular technology ETFs. 
+
+
+\subsection{Stock Mining}
+
+ETFs, or exchange traded funds, generally track an index. This way, they are good representations of the state of an entire market. We used Yahoo's finance API to gather data on 10 ETFs throughout the trading day, which was 8:30-3:00 PM Central time. Yahoo's data was lagged by 15 minutes, so we had to accommodate for that while computing our correlation lag values. We store each gathered price and its timestamp in a MongoDB collection, for later processing.
+
+\subsection{Tweet Mining}
+
+In a similar manner to gathering our tweet corpus from above, we used Twitter's search API to gather tweets about technology from 8:30-3:00 PM Central time, same as market hours. The keywords we used were: 
+$list keywords$. 
+These keywords were chosen arbitrarily, and in future work, would best be integrated with the post-correlated keywords part of the project. 
+Again, we stored the gathered tweets in a MongoDB collection. After gathering the tweets, we classified each of them using our saved classifier and stored the results in another database collection. 
+
+\subsection{Realized Variance}
+
+\subsection{Methods}
+
+\subsection{Correlation Results}
+We will have correlation results soon.
+
+
+
+\section{Keyword Post-Correlation}
+\label{sec:keyword}
+
+\subsection{Methods}
+
+\subsection{Results}
+
+\section{Discussion}
+\label{sec:disc}
+
+\section{Challenges}
+\label{sec:chal}
+
+\section{Future Work}
+\label{sec:future}
+
+
+
+\begin{table}[ht]
+\caption{Conventional and syringe thermometer readings. The highest and lowest readings were used for calibration.}
+\begin{center}
+\begin{tabular}{@{\hspace{18pt}} c @{\hspace{18pt}} || @{\hspace{12pt}} c @{\hspace{12pt}} | @{\hspace{12pt}} c @{\hspace{12pt}} }
+
+\hline\hline
+Conventional & \multicolumn{2}{c}{Syringe {\hspace{9pt}} } \\ \hline
+20$^\circ$C & 1.8cc & 20$^\circ$C \\
+27$^\circ$C & 2.4cc & 28$^\circ$C \\
+42$^\circ$C & 3.9cc & 46$^\circ$C \\
+55$^\circ$C & 5.0cc & 59$^\circ$C \\
+67$^\circ$C & 6.0cc & 72$^\circ$C \\
+84$^\circ$C & 7.0cc & 84$^\circ$C \\
+\hline\hline
+\end{tabular}
+\end{center}
+\label{tab:temps}
+\end{table}
+
+
+\begin{table}[ht]
+\caption{Force, area, and pressure data for the experiment shown in Fig.~\ref{fig:geometry} and described by Eq.~\ref{eq:B}.  Agreement is typically within five percent.}
+\begin{center}
+\begin{tabular}{l @{\hspace{30pt}} c @{\hspace{18pt}} c}
+\hline\hline
+& Piston 1 & Piston 2 \\ \hline
+Avg. Force (N) & 4.40 & 2.25 \\
+Area (cm$^2$) & 6.16 & 2.25 \\
+$F/A$ (N/cm$^2$) & 0.714 & 0.717 \\
+\hline\hline
+\end{tabular}
+\end{center}
+\label{tab:pressure}
+\end{table}
+\subsubsection*{Including References}
+
+
+You must also include a references section in any scientific paper.  To omit the references section is to almost certainly commit plagiarism. As mentioned before, you should include references whenever you have used information from another source.  This might be a professors notes or a textbook.  As you advance in your studies, your references will come more and more from journal articles since these articles generally present more recent results.
+
+In \LaTeX, references are handled very easily in a section called ``thebibliography.''  Thus, you won't actually make a section called references, you will have something called \textit{thebibliography}.  All you do is add a ``bibitem'' to \textit{thebibliography} and give it a label.  Then, whenever you want to refer to it, you use a $\backslash$cite\{\} command.  The order in which you put the items in ``thebibliography'' is the order of the numbering of those items.  Therefore, make sure you put these items in the order that they appear in your paper.  Here is an example of a book citation~\cite{FHD}, an article citation~\cite{Jackson}, and a comment that might make an important subtle point but one that would detract from the main text~\cite{Comment}.
+
+
+\begin{acknowledgments}
+
+You should always have a short acknowledgements section.  This is where you thank people who helped you with the project.  These can be people that assisted with construction, people you talked with that gave you good ideas, people you had an email correspondence with, basically anyone that contributed in some way to the success of the project.  You would also list fundint agencies in the acknowledgements section.
+
+\end{acknowledgments}
+
+
+
+
+\begin{thebibliography}{99}
+
+
+\bibitem{FHD}R. E. Rosensweig, {\it Ferrohydrodynamics} (Cambridge
+University Press, Cambridge, 1985), and references therein.
+
+\bibitem{Jackson}D. P. Jackson, R. E. Goldstein and A. O. Cebers,
+Phys. Rev. E {\bf 50}, 298 (1994).
+
+\bibitem{Comment} Here is an example of a comment that you might need to include.  This is usually a comment about something very subtle that might be important to include but generally gets in the way of the regular text.
+
+\end{thebibliography}
+
+\end{document}             % End of document.
