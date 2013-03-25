@@ -19,7 +19,7 @@
 
 \begin{abstract}
 
-Though uninteresting individually, Twitter messages, or tweets, can provide an accurate reflection of public sentiment on when taken in aggregation. In this paper, we apply sentiment analysis and machine learning principles to accomplish two tasks. We first look for a correlation between twitter sentiment and stock prices and volatility. Secondly, we determine which words in tweets correlate to changes in stock prices by doing a post analysis of price change and tweets. We accomplish this task by mining tweets using their search API and subsequently processing them for analysis. For the task of determining sentiment, we primarily examine the effectiveness of three machine learning techniques: Naive Bayes classification, Maximum Entropy classification, and Support Vector Machines. We discover that SVMs give the highest consistent accuracy through cross validation. $ADD CORRELATION SENTENCE$ Lastly, we discuss various challenges posed by looking at twitter for performing stock predictions. 
+Though uninteresting individually, Twitter messages, or tweets, can provide an accurate reflection of public sentiment on when taken in aggregation. In this paper, we apply sentiment analysis and machine learning principles to accomplish two tasks. We first look for a correlation between twitter sentiment and stock prices and volatility. Secondly, we determine which words in tweets correlate to changes in stock prices by doing a post analysis of price change and tweets. We accomplish this task by mining tweets using their search API and subsequently processing them for analysis. For the task of determining sentiment, we primarily examine the effectiveness of three machine learning techniques: Naive Bayes classification, Maximum Entropy classification, and Support Vector Machines. We discover that $TODO$ give the highest consistent accuracy through cross validation. We then find that there is $TODO$ correlation between stock prices and tweet sentiment. Next, we improve on the keyword search approach by reverse correlating stock prices to individual words in tweets. Lastly, we discuss various challenges posed by looking at twitter for performing stock predictions. 
 
 \end{abstract}
 
@@ -33,24 +33,25 @@ Though uninteresting individually, Twitter messages, or tweets, can provide an a
 
 \section{Related Work}
 \label{sec:rel}
-The proliferation of online documents and user generated texts has led to a recent growth in research in the area of sentiment analysis and its relationship to financial markets. A broad overview of some of the machine learning techniques used in sentiment classification is provided in [Pang]. There, they investigate methods in determining whether movie reviews are positive or negative and examine some challenges in sentiment mining. They provide an overview of Naive Bayes, Maximum Entropy, and Support Vector Machine classification techniques in the movie review domain. 
+The proliferation of online documents and user generated texts has led to a recent growth in research in the area of sentiment analysis and its relationship to financial markets. A broad overview of some of the machine learning techniques used in sentiment classification is provided in \cite{Pang} There, they investigate methods in determining whether movie reviews are positive or negative and examine some challenges in sentiment mining. They provide an overview of Naive Bayes, Maximum Entropy, and Support Vector Machine classification techniques in the movie review domain. 
 
-[Pak] discusses the use of Twitter specifically as a corpus for sentiment analysis. They discuss the methods of tweet gathering and processing. The authors use specific emoticons to form a training set for sentiment classification, a technique that greatly reduces manual tweet tagging. Their training set was split into positive and negative samples based on happy and sad emoticons. This paper borrows from this idea. Additionally, they analyze a few accuracy improvement methods. Similarly, [Bifet] presents a discussion of streaming Tweet mining and sentiment extraction, while furthering the discussion to include opinion mining. 
+\cite{Pak} discusses the use of Twitter specifically as a corpus for sentiment analysis. They discuss the methods of tweet gathering and processing. The authors use specific emoticons to form a training set for sentiment classification, a technique that greatly reduces manual tweet tagging. Their training set was split into positive and negative samples based on happy and sad emoticons. This paper borrows from this idea. Additionally, they analyze a few accuracy improvement methods. Similarly, \cite{Bifet} presents a discussion of streaming Tweet mining and sentiment extraction, while furthering the discussion to include opinion mining. 
 
-[Bollen et Al] presented one of the first indications that there may be a correlation between Twitter sentiment and the stock market. In their work, a sentiment score is correlated with the DJIA and then fed into a neural network to predict market movements. The authors use a mood tracking tool named OpinionFinder to measure mood in 6 dimensions (Calm, Alert, Sure, Vital, Kind, and Happy). Then, they correlate the mood time series with DJIA closing values by using a Self Organizing Fuzzy Neural Network. Using their techniques, they measured an improvement on DJIA prediction accuracy. After publication, this paper launched much of the current research in the relationship between twitter and market sentiments. 
+\cite{Bollen} presented one of the first indications that there may be a correlation between Twitter sentiment and the stock market. In their work, a sentiment score is correlated with the DJIA and then fed into a neural network to predict market movements. The authors use a mood tracking tool named OpinionFinder to measure mood in 6 dimensions (Calm, Alert, Sure, Vital, Kind, and Happy). Then, they correlate the mood time series with DJIA closing values by using a Self Organizing Fuzzy Neural Network. Using their techniques, they measured an improvement on DJIA prediction accuracy. After publication, this paper launched much of the current research in the relationship between twitter and market sentiments. 
 
-A few other techniques in the area have been proposed. [1] provides a method in which tweets are screened for stock symbols, then sentiment is gathered using Naïve Bayes over an existing dataset. Their research continues and is still in the data collection phase. [2] combines sentiment gathered from news with technical features of stock data. Sentiment is analyzed using SentiWordNet 3.0 [7], a lexical resource for opinion mining. Instead of Twitter, they scrape data from Engadget. Multiple kernel learning is run to find the best coefficients for the different factors in their system for stock prediction. The authors found that training a model based on more than technical stock indicators improved stock prediction performance. 
+A few other techniques in the area have been proposed. \citep{Brown} provides a method in which tweets are screened for stock symbols, then sentiment is gathered using Naïve Bayes over an existing dataset. Their research continues and is still in the data collection phase. \cite{Shangkun} combines sentiment gathered from news with technical features of stock data. Sentiment is analyzed using SentiWordNet 3.0 \cite{SWN}, a lexical resource for opinion mining. Instead of Twitter, they scrape data from Engadget. Multiple kernel learning is run to find the best coefficients for the different factors in their system for stock prediction. The authors found that training a model based on more than technical stock indicators improved stock prediction performance. 
 
-[6] achieves a 75\% accurate prediction mechanism using Self Organizing Fuzzy Neural Networks on Twitter and DJIA feeds. In their research, they created a custom questionnaire with words to analyze tweets for their sentiment. Their work is similar to [Bollen et Al], with a few minor modifications.
+\cite{Mittal} achieves a 75\% accurate prediction mechanism using Self Organizing Fuzzy Neural Networks on Twitter and DJIA feeds. In their research, they created a custom questionnaire with words to analyze tweets for their sentiment. Their work is similar to \cite{Bollen}, with a few minor modifications.
 
-On a side note, [14] discusses some common problems involved in many of the techniques presented above. These include, but are not limited to: insufficient data, inaccurate measures of performance, and inappropriate scaling. 
+On a side note, \cite{Hurwitz} discusses some common problems involved in many of the techniques presented above. These include, but are not limited to: insufficient data, inaccurate measures of performance, and inappropriate scaling. 
 
 The techniques proposed by these papers provide an interesting overview of sentiment analysis and how it can relate to the stock market. However, the results seem varied and may depend heavily on the accuracy of a twitter sentiment classifier. Additionally, the market and keywords used are not detailed in most of these papers, which may play a big role in determining whether or not the system is effective in stock prediction. In this work, we build off some of these previous works to build a sentiment analyzer. However, in addition to correlating stock price, we look for correlations in particular words in tweets that indicate positive and negative market movements after-the-fact. 
 
 \section{Proposed Model}
 \label{sec:model}
 
-$Insert figure of proposed model$
+\includegraphics[scale=.75]{graphic1.png}\\
+Figure 1. Proposed research model
 
 \section{Corpus Collection}
 \label{sec:mining}
@@ -88,9 +89,10 @@ To save our training tweet data, we used MongoDB. MongoDB is a document based da
 \section{Tweet Text Processing}
 \label{sec:txt}
 
-The text of each tweet contains many extraneous words that do not contribute to its sentiment. Many tweets include URLS, tags to other users, or symbols that have no meaning. To accurately obtain a tweet's sentiment, we first need to filter the noise from its original state. To do this, we incorporate a variety of techniques.
+The text of each tweet contains many extraneous words that do not contribute to its sentiment. Many tweets include URLS, tags to other users, or symbols that have no meaning. To accurately obtain a tweet's sentiment, we first need to filter the noise from its original state. To do this, we incorporate a variety of techniques. An example of common tweet characters and formats can be seen in Table 1. Before processing, many of the tweets characters and words merely add noise to our sentiment analysis. \\
 
-$Insert table here containing tweet examples$
+\includegraphics[scale=.75]{tweet_table.png}\\
+Table 1. Tweet examples
 
 \subsection{Tokenization}
 
@@ -226,9 +228,11 @@ With the Maximum Entropy classifier, 5-fold cross validation yielded an average 
 
 With the Support Vector Machine, 5-fold cross validation yielded an average accuracy of $accuracy$. These results will be discussed more when I have them.
 
-A summary of our results $Insert Table of Results$
+A summary of our results: \\
 
- 
+\includegraphics[scale=.8]{acc_table.png} \\
+Table 2. Classifier results summary
+
 \section{Market Correlation}
 \label{sec:corr}
 
@@ -255,69 +259,55 @@ We will have correlation results soon.
 
 
 
-\section{Keyword Post-Correlation}
+\section{Significant Keyword Correlation}
 \label{sec:keyword}
+After gathering a significant amount of tweets and price information, we decided to additionally look for correlation between significant words and stock prices. Because of our difficulty coming up with the best related keywords for twitter, we realized there was a parallel problem we could solve with our data. This time, instead of looking for a correlation between stock prices and tweet sentiments, we decided to work backwards and examine which specific words from tweets were associated with changes in stock prices. 
 
 \subsection{Methods}
+We need no additional data to perform this task. We have already gathered our technology related tweets, and have our stock prices. Again, we are looking to see which specific words seem to lead to a change in stock prices. To do this, we:
+\begin{enumerate}
+\item Associate each tweet and each stock price with a timestamp, measured to the closest minute.
+\item Choose a set of lag values, $k$, to iterate through. (With the +15 minute Yahoo lag compensation)
+\item Create a dictionary mapping individual words to a score for every minute $m$. 
+\item For each minute $m$, compute the difference in current stock price, $d$, with the price after a certain lag. 
+\item Every word per tweet at minute $m$ adds $d$ to their score. 
+\item Afterwards, return the words with highest and lowest total scores.
+\end{enumerate}
+
+We are only interested in the extremes, as the highest score indicates words which are associated with positive stock price change, while the lowest scores are associated with negative stock price change. At the end of iterating through each minute in a market day for a number of lag values, we are left with a list of words which are most strongly correlated with stock price change, either positive or negative. 
 
 \subsection{Results}
+Coming soon!
 
 \section{Discussion}
 \label{sec:disc}
 
+Coming soon!
+
 \section{Challenges}
 \label{sec:chal}
 
+Throughout the course of the project, we ran across a number of challenges. The scope of the challenges varied greatly, and we were able to overcome some, but not all. 
+
+The first challenge we discovered was a matter of tweet searching. Though we had a system set up to process tweets, it was difficult to choose the right keywords to search on. In the end, our method was a bit arbitrary, for we had no stronger alternative. We tried using different stock symbols to collect our tweets, but Though the keywords chosen matter less and less with a larger amount of tweets, they still play a large role in determining how much correlation there is between tweet sentiment and stock market prices. 
+
+Another inherent challenge with twitter sentiment is differentiating between slang or jargon and real English. For example, many people substitute "your" with "ur," or "hello" with "yo." Though we are able to understand slang when we read it, it is harder for a computer to understand. Therefore, many important, sentiment-contributing words are potentially lost. This is a challenging problem to solve, and perhaps more work will be done on it in the future. 
+
+Additionally, we ran into the challenge of computation time and power. Because we didn't have immediate access to large amounts of storage, we trained many of our classifiers on a limited number of tweets. Though the system is able to train on much more data, we didn't have the time or computation power at hand. This challenge can be addressed by taking the project to a larger scale, over a few years. This way, there would be more data to train on and more time to do the training. 
+
 \section{Future Work}
 \label{sec:future}
+There are many areas in which this work could be expanded on in the future. With a longer period of time and more resources, there is much potential in the area. 
 
+One idea for future improvement is to gather data for a longer period of time, and with different granularities. One of the shortcomings of this study was the lack of time needed (years) for best data collection. If possible, we would want to collect data over the course of a few years, both from Twitter and the stock market. This way, we could also alter the granularity of the data. Instead of looking at intraday trends between Twitter and the stock market, we would be able to look at larger scales of correlation, between days or weeks. Intuitively, we feel that decreasing the granularity of the data would provide for a stronger correlation, as the sentiment would be more accurate. Also, sentiment, a macro measurement, may take a while to manifest itself in the stock market- more than just in a few minutes or hours. We would be able to have more tweets for both training and analyzing, also, from a longer period of time. 
 
+Another natural expansion of the project would be to actually make stock predictions and trade money based on twitter sentiment. To do this, w would follow some existing examples of using a Neural Network for prediction. However, we would not want to solely rely on twitter sentiment- we would want to incorporate other technical indicators. This is quite a bit more research and knowledge, and was out of scope of this project. Nevertheless, it would be an interesting area of future study, as the options and opportunities in the area of stock price prediction are endless. 
 
-\begin{table}[ht]
-\caption{Conventional and syringe thermometer readings. The highest and lowest readings were used for calibration.}
-\begin{center}
-\begin{tabular}{@{\hspace{18pt}} c @{\hspace{18pt}} || @{\hspace{12pt}} c @{\hspace{12pt}} | @{\hspace{12pt}} c @{\hspace{12pt}} }
-
-\hline\hline
-Conventional & \multicolumn{2}{c}{Syringe {\hspace{9pt}} } \\ \hline
-20$^\circ$C & 1.8cc & 20$^\circ$C \\
-27$^\circ$C & 2.4cc & 28$^\circ$C \\
-42$^\circ$C & 3.9cc & 46$^\circ$C \\
-55$^\circ$C & 5.0cc & 59$^\circ$C \\
-67$^\circ$C & 6.0cc & 72$^\circ$C \\
-84$^\circ$C & 7.0cc & 84$^\circ$C \\
-\hline\hline
-\end{tabular}
-\end{center}
-\label{tab:temps}
-\end{table}
-
-
-\begin{table}[ht]
-\caption{Force, area, and pressure data for the experiment shown in Fig.~\ref{fig:geometry} and described by Eq.~\ref{eq:B}.  Agreement is typically within five percent.}
-\begin{center}
-\begin{tabular}{l @{\hspace{30pt}} c @{\hspace{18pt}} c}
-\hline\hline
-& Piston 1 & Piston 2 \\ \hline
-Avg. Force (N) & 4.40 & 2.25 \\
-Area (cm$^2$) & 6.16 & 2.25 \\
-$F/A$ (N/cm$^2$) & 0.714 & 0.717 \\
-\hline\hline
-\end{tabular}
-\end{center}
-\label{tab:pressure}
-\end{table}
-\subsubsection*{Including References}
-
-
-You must also include a references section in any scientific paper.  To omit the references section is to almost certainly commit plagiarism. As mentioned before, you should include references whenever you have used information from another source.  This might be a professors notes or a textbook.  As you advance in your studies, your references will come more and more from journal articles since these articles generally present more recent results.
-
-In \LaTeX, references are handled very easily in a section called ``thebibliography.''  Thus, you won't actually make a section called references, you will have something called \textit{thebibliography}.  All you do is add a ``bibitem'' to \textit{thebibliography} and give it a label.  Then, whenever you want to refer to it, you use a $\backslash$cite\{\} command.  The order in which you put the items in ``thebibliography'' is the order of the numbering of those items.  Therefore, make sure you put these items in the order that they appear in your paper.  Here is an example of a book citation~\cite{FHD}, an article citation~\cite{Jackson}, and a comment that might make an important subtle point but one that would detract from the main text~\cite{Comment}.
-
+Lastly, another area of future work would be to better incorporate the significant words determined by this paper into the keywords used to look for technology related tweets. Naturally, by first discovering which individual words seem to correlate to changes in stock prices, and then building a dataset from those words, we might be able to see a stronger correlation to certain stocks. Though this is more narrow of a project and would be less generalizable, it would be more practical for real money trading. The words may only relate to a specific stock or set of stocks, but that would be okay. 
 
 \begin{acknowledgments}
 
-You should always have a short acknowledgements section.  This is where you thank people who helped you with the project.  These can be people that assisted with construction, people you talked with that gave you good ideas, people you had an email correspondence with, basically anyone that contributed in some way to the success of the project.  You would also list fundint agencies in the acknowledgements section.
+This project would not have been possible without the guidance of Dr. Inderjit Dhillon, the advisor for this study. Additionally, thanks go out to Dr. Aziz Adnan for his mentorship, and Dr. William Press for assisting on the Undergraduate Thesis Comittee. Lastly, thanks to my team in 1 Semester Startup- Ashton Grimball, George Su, and Patrick Day, for introducing me to this area of research. 
 
 \end{acknowledgments}
 
@@ -326,14 +316,19 @@ You should always have a short acknowledgements section.  This is where you than
 
 \begin{thebibliography}{99}
 
-
-\bibitem{FHD}R. E. Rosensweig, {\it Ferrohydrodynamics} (Cambridge
-University Press, Cambridge, 1985), and references therein.
-
-\bibitem{Jackson}D. P. Jackson, R. E. Goldstein and A. O. Cebers,
-Phys. Rev. E {\bf 50}, 298 (1994).
-
-\bibitem{Comment} Here is an example of a comment that you might need to include.  This is usually a comment about something very subtle that might be important to include but generally gets in the way of the regular text.
+\bibitem{Pang}B. Pang, L. Lee, and S. Vaithyanathan. Thumbs up? Sentiment Classification using Machine Learning Techniques. {\it Proceedings of EMNLP} Publication. 79-86: Cornell, 2002. 
+\bibitem{Bollen}J. Bollen and H. Mao. Twitter mood as a stock market predictor. IEEE Computer, 44(10):91–94.	
+\bibitem{Pak}Alexander Pak and Patrick Paroubek. 2010. Twitter as a Corpus for Sentiment Analysis and Opinion Mining. In Proceedings of LREC. 
+\bibitem{Mittal}Mittal, Anshul, and Arpit Goel. {\it Stock Prediction Using Twitter Sentiment Analysis}. Publication. N.p.: Stanford, n.d. Print.
+\bibitem{SWN}SentiWordNet. An Enhanced Lexical Resource for Sentiment Analysis and Opinion Mining. http://sentiwordnet.isti.cnr.it/
+\bibitem{Chen}Chen, Ray, and Marius Lazer. {\it Sentiment Analysis of Twitter Feeds for the Prediction of Stock Market Movement}. Publication. N.p.: Stanford, n.d. Print.
+\bibitem{Baccianella} Baccianella, Stefano, Andrea Esuli, and Fabrizio Sebastiani. {\it SentiWordNet 3.0: An Enhanced Lexical Resource for Sentiment Analysis and Opinion Mining. Publication}. N.p.: Istituto Di Scienza E Tecnologie Dell'Informazione, 2010. Print.
+\bibitem{Bifet}Bifet, Albert, and Eibe Frank. {\it Sentiment Knowledge Discovery in Twitter Streaming Data}. Publication. Hamilton: University of Waikato, n.d. Print.
+\bibitem{Hurwitz}Hurwitz, E., and T. Marwala. {\it Common Mistakes When Applying Computational Intelligence and Machine Learning to Stock Market Modelling. \it} Publication. N.p.: Cornell, 2012. Print.
+\bibitem{Brown}Brown, Eric D., "Will Twitter Make You a Better Investor? A Look at Sentiment, User Reputation and Their Effect on the Stock Market" (2012). {\it SAIS 2012 Proceedings}. Paper 7.
+http://aisel.aisnet.org/sais2012/
+\bibitem{Shangkun}Shangkun Deng, Takashi Mitsubuchi, Kei Shioda, Tatsuro Shimada, and Akito Sakurai. 2011. Combining Technical Analysis with Sentiment Analysis for Stock Price Prediction. In {\it Proceedings of the 2011 IEEE Ninth International Conference on Dependable, Autonomic and Secure Computing} (DASC '11). IEEE Computer Society, Washington, DC, USA, 800-807. DOI=10.1109/DASC.2011.138 http://dx.doi.org/10.1109/DASC.2011.138
+\bibitem{Zhang}Zhang, DongSong, and Lina Zhou. "Discovering Golden Nuggets: Data Mining in Financial Application." Systems, Man, and Cybernetics, Part C: Applications and Reviews, IEEE Transactions on 34.4 (2004): 513-22. Web.
 
 \end{thebibliography}
 
