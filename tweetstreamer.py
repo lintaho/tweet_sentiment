@@ -4,10 +4,12 @@ from pymongo import MongoClient
 from twython import Twython
 import time
 from datetime import datetime
+
+# MongoDB Setup
 connection = MongoClient('localhost', 27017)
 db = connection.data
-#collection = db['tweet_series']
 
+# Twitter API Info
 t = Twython(app_key='tukYVvz2d4MIG4KCxObMkA',
             app_secret='uxJwgj45Qi1lbuqz6FuYcZJsTvpKG6fGab46BBsZ28',
             oauth_token='49249889-yILZ38P5XB84kCV0ZvBY2X4iQg0FdrBxE02mAParR',
@@ -16,16 +18,15 @@ t = Twython(app_key='tukYVvz2d4MIG4KCxObMkA',
 
 sid = None
 query = 'technology OR stocks'
-# tech stocks OR tech etfs OR technology stocks OR technology industry OR tech sector OR technology sector OR tech industry OR IT industry OR IT stocks'
- #       OR internet stocks OR internet OR apple'
 
+# Contiously searches tweets for query at max rate limit
 while True:
     now = datetime.now().strftime('%H%M')
     day = datetime.now().weekday()
     if '0830' <= now <= '1500' and day < 5:
         collection = db['tech' + datetime.now().strftime('%U%w')]
         for x in range(327):
-            #print 'Time remaining: ' + str(datetime.timedelta(seconds=(327 - x) * 11))
+            print 'Time remaining: ' + str(datetime.timedelta(seconds=(327 - x) * 11))
             try:
                 tweets = \
                     t.search(q=query,

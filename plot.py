@@ -3,22 +3,21 @@
 from pymongo import MongoClient
 import matplotlib.pyplot as plt
 from numpy import *
+from scipy import stats as sp
 
+# MongoDB setup
 connection = MongoClient('localhost', 27017)
-db_stocks = connection.trading_day_082
+db_stocks = connection.trading_day_121
 db_tweets = connection.data
 # results_col = db[str(sys.argv[1])]
-
 results_col_stocks = db_stocks['SOXL']
-results_col_tweets = db_tweets['results']
+results_col_tweets = db_tweets['results121']
 
-
+# Market open and close times
 begin_time = 83000
 end_time = 150000
 
-
-
-# 390 minutes
+# Converts all prices to a list indexed by timestamp
 all_prices = []
 lt = '083000'
 for minute in range(420):
@@ -28,24 +27,23 @@ for minute in range(420):
         s = results_col_stocks.find({'time': {'$gt': lt, '$lt': gt}})
         if s.count() != 0:
             for x in range(s.count()):
-                all_prices.append(s[x]['price'])
+                all_prices.append(float(s[x]['price']))
         else:
             if len(all_prices) > 1:
-                all_prices.append(all_prices[len(all_prices) - 1])
+                all_prices.append(float(all_prices[len(all_prices) - 1]))
             else:
-                all_prices.append(0)
+                all_prices.append(0.0)
 
         t = results_col_tweets.find({'time': {'$gt': lt, '$lt': gt}})
-
-
         lt = gt
 
-print len(all_prices)
 prices = []
 times = []
 for i in range(s.count()):
     prices.append(float(s[i]['price']))
     times.append(s[i]['time'])
+
+# Adds tweets to list indexed by timestamp
 lt = '083000'
 all_tweet_scores = []
 for minute in range(420):
@@ -55,7 +53,7 @@ for minute in range(420):
         b = results_col_tweets.find({'time': {'$gt': lt, '$lt': gt}})
         if b.count() != 0:  # if one or more tweets in that minute
             p, n = 0, 0
-            for y in range(b.count()):  # for each tweet, add up the pos and neg scores
+            for y in range(b.count() / 50):  # for each tweet, add up the pos and neg scores
                 sent = b[y]['sent']
                 if sent == 'positive':
                     p += 1
@@ -97,13 +95,15 @@ print len(all_prices), len(all_tweet_scores)
 #         else:
 #             neg_score += 1
 #         time = new_time
- 
+
+
+print sp.stats.pearsonr(all_prices, all_tweet_scores)
 b = array(all_tweet_scores)
 b /= b.max()
 a = array(all_prices)
 a /= a.max()
 
 plt.plot(a)
-plt.axis([0, len(scores), 0, 1])
+plt.axis([0, len(all_tweet_scores), 0, 1])
 plt.plot(b)
 plt.show()

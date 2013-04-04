@@ -5,6 +5,7 @@ import time
 from pymongo import MongoClient
 import datetime
 
+# MongoDB setup
 connection = MongoClient('localhost', 27017)
 db = connection.local
 neg_col = db['neg_emoticons']
@@ -16,15 +17,12 @@ t = Twython(app_key='tukYVvz2d4MIG4KCxObMkA',
             oauth_token_secret='hVKkn8jlIyUQbKPnWXnlmdL4j8iM7FDI7LFOtzX40'
            )
 
-
 num_hours = 3  # pos and neg each
 pos_query = ':) OR :-) OR =) OR :D OR :P OR <3 OR like OR love'
 neg_query = ":( OR =( OR hate OR dislike"
-# neg_query = 'bieber OR i+hate'
 sid = None
 
 pos, neg = False, True
-#  TODO fix hour calculation count to reflect if positive or negative, etc.
 
 # Positive emotion tweets
 if pos:

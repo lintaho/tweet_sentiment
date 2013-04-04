@@ -5,6 +5,7 @@ from twython import Twython
 import time
 import datetime
 
+# MongoDB setup
 connection = MongoClient('localhost', 27017)
 db = connection.data
 collection = db['tweet_series']

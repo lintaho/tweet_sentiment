@@ -3,12 +3,11 @@
 import ystockquote
 import time
 from datetime import datetime
-import numpy as np
 from pymongo import MongoClient
 
+# MongoDB Setup
 connection = MongoClient('localhost', 27017)
 db = connection['trading_day_' + datetime.now().strftime('%U%w')]
-#week number, day number 6 = sat, 0 = sunday
 
 def load_stocklist(document):
     stock_list = []
@@ -19,6 +18,7 @@ def load_stocklist(document):
 
 stock_list = load_stocklist('tech_etfs.txt')
 
+# Queries Yahoo API for list of ETF prices every minute.
 while True:
     now = datetime.now().strftime('%H%M')
     day = datetime.now().weekday()

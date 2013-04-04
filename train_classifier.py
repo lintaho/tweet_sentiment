@@ -13,18 +13,8 @@ from nltk.metrics import BigramAssocMeasures
 from nltk.probability import FreqDist, ConditionalFreqDist
 from svmutil import *
 
-# sw_file = open("stopwords.txt", "r")
-# stop_words = []
-# line = sw_file.readline()
-# while line:
-#     words = line.strip()
-#     stop_words.append(words)
-#     line = sw_file.readline()
-# sw_file.close()
-
 def remove_stopwords(text):
     return [w for w in text if not w in stopwords.words('english')]
-
 
 start_time = time.time()
 connection = MongoClient('localhost', 27017)
@@ -156,8 +146,8 @@ test_tweets = tweets[:len(tweets) / 5]
 tweets = tweets[len(tweets) / 5:]
 tweets = add_ngrams(tweets)
 test_tweets = add_ngrams(test_tweets)
-
-# print tweetlist
+del neg_tweets
+del pos_tweets
 
 #add_XX_features()
 word_features = get_word_features(get_words_in_tweets(tweets))
@@ -185,7 +175,6 @@ def save_features(document, feats):
     pickle.dump(feats, f)
     f.close()
     print 'features saved in ' + document
-
 
 def get_svm_features(tweets, featureList):
     sortedFeatures = sorted(featureList)
@@ -246,13 +235,10 @@ def k_fold_validation(k, tweets):
         save_classifier('classifier_xfold' + str(acc) + '.pickle', classifier)
         #print nltk.classify.accuracy(classifier, test_set)
 
-# k_fold_validation(4, tweets)
 
 
 training_set = nltk.classify.apply_features(extract_features, tweets)
 test_set = nltk.classify.apply_features(extract_features, test_tweets)
-
-
 
 
 def train_svm():
@@ -260,11 +246,24 @@ def train_svm():
     result = get_svm_features(tweets, word_features)
     problem = svm_problem(result['labels'], result['feature_vector'])
     param = svm_parameter('-q')
+
+    # param.cross_validation = 1
+    # param.nr_fold = 10
+
     param.kernel_type = LINEAR
     classifier = svm_train(problem, param)
+    # svm_save_model('classifier_SVM_x.model', classifier)
     test_feature_vector = get_svm_features(test_tweets, word_features)
+    # print test_feature_vector
     p_labels, p_accs, p_vals = svm_predict(test_feature_vector['labels'], test_feature_vector['feature_vector'], classifier)
-
+    pf, pr, pp = calc_prec_recall_svm(test_feature_vector['labels'], p_labels, 1)
+    nf, nr, np = calc_prec_recall_svm(test_feature_vector['labels'], p_labels, 0)
+    print 'pos precision: ', str(pp)
+    print 'pos recall: ', str(pr)
+    print 'pos fscore: ', str(pf)
+    print 'neg precision: ', str(np)
+    print 'neg recall: ', str(nr)
+    print 'neg fscore: ', str(pf)
     return classifier
 
 def train_naive_bayes():
@@ -277,6 +276,34 @@ def train_maxent():
     classifier = nltk.classify.maxent.MaxentClassifier.train(training_set, 'GIS', trace=3, encoding=None, labels=None, sparse=True, gaussian_prior_sigma=0, max_iter=10)
     return classifier
 
+def calc_prec_recall_svm(ty, pv, sign):
+        tp = 0.0
+        fp = 0.0
+        fn = 0.0
+        #sign 1 = pos, 0 = neg
+        for i in range(len(ty)):
+            if pv[i] == sign and ty[i] == sign:
+                    tp += 1
+            else:
+                if pv[i] == sign and ty[i] != sign:
+                    fp += 1
+                else:
+                    if pv[i] != sign and ty[i] == sign:
+                        fn += 1
+        if tp + fp == 0:
+            precision = 0
+        else:
+            precision = float(tp) / float(tp + fp)
+        if tp + fn == 0:
+            recall = 0
+        else:
+            recall = float(tp) / float(tp + fn)
+        if precision + recall == 0:
+            fscore = 0
+        else:
+            fscore = 2 * precision * recall / (precision + recall)
+        return (fscore, recall, precision)
+
 def calc_prec_recall(classifier):
     referenceSets = collections.defaultdict(set)
     testSets = collections.defaultdict(set)
@@ -287,27 +314,48 @@ def calc_prec_recall(classifier):
         predicted = classifier.classify(features)
         testSets[predicted].add(i)
 
-    print 'pos precision:', nltk.metrics.precision(referenceSets['positive'], testSets['positive'])
-    print 'pos recall:', nltk.metrics.recall(referenceSets['positivenegative'], testSets['positivenegative'])
-    print 'neg precision:', nltk.metrics.precision(referenceSets['negative'], testSets['negative'])
-    print 'neg recall:', nltk.metrics.recall(referenceSets['negative'], testSets['negative'])
+    pp = nltk.metrics.precision(referenceSets['positive'], testSets['positive'])
+    pr = nltk.metrics.recall(referenceSets['positive'], testSets['positive'])
+    np = nltk.metrics.precision(referenceSets['negative'], testSets['negative'])
+    nr = nltk.metrics.recall(referenceSets['negative'], testSets['negative'])
+    if pp and pr:
+        pos_fscore = 2 * (pp * pr) / (pr + pp)
+    else:
+        pos_fscore = 0
+    if np and nr:
+        neg_fscore = 2 * (np * nr) / (nr + np)
+    else:
+        neg_fscore = 0
+    print 'pos precision: ', pp
+    print 'pos recall: ', pr
+    print 'pos fscore: ', str(pos_fscore)
+    print 'neg precision: ', np
+    print 'neg recall: ', nr
+    print 'neg fscore: ', str(neg_fscore)
 
 def show_stats(classifier):
     classifier.show_most_informative_features(10)
     print 'training time: ' + str(time.time() - start_time) + ' seconds'
-    print 'accuracy: ' + str(nltk.classify.accuracy(classifier, test_set))
+    # print 'accuracy: ' + str(nltk.classify.accuracy(classifier, test_set))
 
 if str(sys.argv[1]) == '1':
     classifier = train_svm()
+
+    svm_save_model('classifier_SVM.model', classifier)
+    save_features('features_SVM.pickle', word_features)
+    #m = svm_load_model('libsvm.model')
+
 elif str(sys.argv[1]) == '2':
     classifier = train_maxent()
     calc_prec_recall(classifier)
     show_stats(classifier)
-    save_classifier('classifier_xfoldtest.pickle', classifier)
+    save_classifier('classifier_ME.pickle', classifier)
     save_features('features.pickle', word_features)
 else:
     classifier = train_naive_bayes()
     calc_prec_recall(classifier)
     show_stats(classifier)
-    save_classifier('classifier_xfoldtest.pickle', classifier)
-    save_features('features.pickle', word_features)
+    save_classifier('classifier_NB.pickle', classifier)
+    save_features('features_NB.pickle', word_features)
+
+# k_fold_validation(4, tweets)
