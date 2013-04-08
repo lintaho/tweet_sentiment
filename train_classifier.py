@@ -16,6 +16,8 @@ from svmutil import *
 def remove_stopwords(text):
     return [w for w in text if not w in stopwords.words('english')]
 
+nltk.config_megam('.')
+
 start_time = time.time()
 connection = MongoClient('localhost', 27017)
 db = connection.local
@@ -140,6 +142,9 @@ def get_word_features(wordlist):
 
 
 tweets = pos_tweets + neg_tweets
+ktweets = []
+if str(sys.argv[1]) == '3':
+    ktweets = tweets
 num_trained = len(tweets)
 random.shuffle(tweets)
 test_tweets = tweets[:len(tweets) / 5]
@@ -206,21 +211,19 @@ def k_fold_validation(k, tweets):
     acc = 0.0
     for i in range(k):
         sets.append(tweets[(len(tweets) / k * i):(len(tweets) / k * i + len(tweets) / k)])
-        # print len(tweets[(len(tweets) / k * i):(len(tweets) / k * i + len(tweets) / k)])
     for i in range(k):
         training_tweets = []
         test_tweets = sets[i]
         for j in range(k):
             if i != j:
                 training_tweets.extend(sets[j])
-        # print len(training_tweets), len(test_tweets)
         training_set = nltk.classify.apply_features(extract_features, training_tweets)
         test_set = nltk.classify.apply_features(extract_features, test_tweets)
         del training_tweets
         del test_tweets
         print 'training ' + str(len(training_set))
-        classifier = nltk.NaiveBayesClassifier.train(training_set)
-        #  print test_set[0][1]
+        classifier = train_naive_bayes()
+        # classifier = train_maxent()
         pos_score, neg_score, neut_score = 0, 0, 0
         print 'finding accuracy...'
         for i, tweet in enumerate(test_set):
@@ -233,7 +236,6 @@ def k_fold_validation(k, tweets):
         acc = float(pos_score) / float(len(test_set))
         print acc
         save_classifier('classifier_xfold' + str(acc) + '.pickle', classifier)
-        #print nltk.classify.accuracy(classifier, test_set)
 
 
 
@@ -273,7 +275,7 @@ def train_naive_bayes():
 
 def train_maxent():
     print 'training max ent classifier with ' + str(num_trained) + ' tweets'
-    classifier = nltk.classify.maxent.MaxentClassifier.train(training_set, 'GIS', trace=3, encoding=None, labels=None, sparse=True, gaussian_prior_sigma=0, max_iter=10)
+    classifier = nltk.classify.maxent.MaxentClassifier.train(training_set, 'megam', trace=3, encoding=None, labels=None, sparse=True, gaussian_prior_sigma=0, max_iter=10)
     return classifier
 
 def calc_prec_recall_svm(ty, pv, sign):
@@ -336,7 +338,7 @@ def calc_prec_recall(classifier):
 def show_stats(classifier):
     classifier.show_most_informative_features(10)
     print 'training time: ' + str(time.time() - start_time) + ' seconds'
-    # print 'accuracy: ' + str(nltk.classify.accuracy(classifier, test_set))
+    print 'accuracy: ' + str(nltk.classify.accuracy(classifier, test_set))
 
 if str(sys.argv[1]) == '1':
     classifier = train_svm()
@@ -351,11 +353,11 @@ elif str(sys.argv[1]) == '2':
     show_stats(classifier)
     save_classifier('classifier_ME.pickle', classifier)
     save_features('features.pickle', word_features)
-else:
+elif str(sys.argv[1]) == '0':
     classifier = train_naive_bayes()
     calc_prec_recall(classifier)
     show_stats(classifier)
     save_classifier('classifier_NB.pickle', classifier)
     save_features('features_NB.pickle', word_features)
-
-# k_fold_validation(4, tweets)
+elif str(sys.argv[1]) == '3':
+    k_fold_validation(4, ktweets)

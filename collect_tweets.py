@@ -8,7 +8,7 @@ import datetime
 # MongoDB setup
 connection = MongoClient('localhost', 27017)
 db = connection.data
-collection = db['tweet_series']
+collection = db['unlabeled']
 
 t = Twython(app_key='tukYVvz2d4MIG4KCxObMkA',
             app_secret='uxJwgj45Qi1lbuqz6FuYcZJsTvpKG6fGab46BBsZ28',
@@ -16,12 +16,12 @@ t = Twython(app_key='tukYVvz2d4MIG4KCxObMkA',
             oauth_token_secret='hVKkn8jlIyUQbKPnWXnlmdL4j8iM7FDI7LFOtzX40'
             )
 
-query = 'oscars OR oscars2013 OR #oscars2013'
+query = 'stocks OR economy'
 sid = None
 num_hours = 5
 
 for db_num in range(num_hours):
-    collection = db['oscars' + str(db_num)]
+    # collection = db['' + str(db_num)]
     for x in range(327):
         print 'Time remaining: ' + str(datetime.timedelta(seconds=(327 - x) * 11)) + ' on hour ' + str(db_num)
         try:

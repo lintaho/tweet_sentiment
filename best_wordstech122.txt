@@ -1,0 +1,396 @@
+lag:10
+Least-----------------------------------------------------------
+contracts -8.7154
+pricing -8.2254
+(u'no', u'contracts') -7.6956
+(u'with', u'no', u'contracts') -7.6746
+(u'phone', u'pricing') -7.6618
+patents -7.6447
+(u'tmobile', u'unveils') -7.5952
+(u'tmobile', u'unveils', u'aggressive') -7.5222
+aggressive -7.5214
+(u'no', u'look') -7.4918
+(u'apple', u'patents') -7.4662
+(u'patents', u'no', u'look') -7.4495
+(u'patents', u'no') -7.4495
+(u'apple', u'patents', u'no') -7.4321
+(u'unveils', u'aggressive') -7.4285
+(u'unveils', u'aggressive', u'phone') -7.3991
+(u'aggressive', u'phone') -7.3765
+(u'aggressive', u'phone', u'pricing') -7.3765
+(u'with', u'no') -7.3702
+(u'pricing', u'with', u'no') -7.3525
+Most-----------------------------------------------------------
+(u'stocks', u'enjoy') 10.0969
+(u'decimated', u'us') 10.0969
+(u'once', u'decimated') 10.113
+decimated 10.117
+enjoy 10.1938
+(u'fish', u'stocks') 10.3052
+(u'us', u'fish') 10.3977
+(u'us', u'fish', u'stocks') 10.3977
+amp 10.664
+(u'bounce', u'back') 10.6818
+(u'us', u'stocks') 10.7207
+bounce 10.9758
+fish 11.1338
+(u'us', u'stocks', u'open') 11.4542
+(u'stocks', u'open', u'higher') 11.8017
+(u'open', u'higher') 11.8363
+(u'stocks', u'open') 11.9818
+report 12.0911
+video 14.0928
+
+
+lag:20
+Least-----------------------------------------------------------
+icann -16.845
+(u'new', u'brand') -9.5811
+(u'new', u'brand', u'database') -9.5811
+(u'launches', u'new', u'brand') -9.5811
+(u'icann', u'launches', u'new') -9.5811
+(u'launches', u'new') -9.442
+clearing -8.9421
+(u'clearing', u'house') -8.8931
+(u'brand', u'database', u'a') -8.8445
+(u'database', u'a') -8.8445
+(u'database', u'a', u'clearing') -8.8445
+(u'a', u'clearing') -8.7871
+(u'clearing', u'house', u'set') -8.7871
+(u'house', u'set') -8.7871
+(u'set', u'up', u'by') -8.7871
+(u'a', u'clearing', u'house') -8.7871
+(u'house', u'set', u'up') -8.7871
+(u'set', u'up') -8.7871
+brand -8.7388
+(u'icann', u'launches') -8.7312
+Most-----------------------------------------------------------
+(u'in', u'the') 14.625
+amp 15.2847
+street 15.4235
+gains 15.5334
+data 15.704
+tech 15.7201
+look 15.9573
+(u'us', u'stocks', u'open') 16.8227
+facebook 17.3794
+report 17.971
+(u'stocks', u'open', u'higher') 18.9897
+apple 19.0323
+(u'stocks', u'open') 19.1397
+video 19.9935
+(u'open', u'higher') 20.4885
+google 20.9695
+via 24.1103
+(u'us', u'stocks') 24.3705
+news 28.7262
+
+
+lag:30
+Least-----------------------------------------------------------
+icann -32.9386
+(u'new', u'brand') -19.3117
+(u'new', u'brand', u'database') -19.3117
+(u'launches', u'new', u'brand') -19.3117
+(u'icann', u'launches', u'new') -19.3117
+(u'launches', u'new') -19.2263
+(u'icann', u'launches') -18.5765
+(u'brand', u'database') -18.5765
+brand -17.7598
+launches -17.4019
+database -16.9274
+(u'set', u'up') -16.0666
+clearing -15.7682
+(u'clearing', u'house') -15.7131
+(u'brand', u'database', u'a') -15.6311
+(u'database', u'a') -15.6311
+(u'database', u'a', u'clearing') -15.6311
+(u'a', u'clearing') -15.5931
+(u'clearing', u'house', u'set') -15.5931
+(u'house', u'set') -15.5931
+Most-----------------------------------------------------------
+(u'in', u'the') 12.2479
+(u'us', u'stocks', u'open') 12.7089
+gains 13.4615
+(u'is', u'a') 14.1285
+(u'stocks', u'open', u'higher') 14.9818
+(u'stocks', u'open') 15.0308
+facebook 16.2236
+report 16.511
+(u'open', u'higher') 16.5955
+tech 17.4867
+bounce 17.5053
+(u'bounce', u'back') 17.5825
+video 18.9565
+via 20.1498
+data 20.2635
+apple 22.2101
+(u'us', u'stocks') 25.3918
+google 25.4628
+news 29.7099
+
+
+lag:40
+Least-----------------------------------------------------------
+contracts -13.8025
+pricing -13.3745
+tmobile -13.0991
+icann -12.6469
+phone -12.5768
+(u'no', u'contracts') -12.0174
+(u'phone', u'pricing') -11.9576
+(u'with', u'no', u'contracts') -11.9374
+facebooks -11.7927
+(u'with', u'no') -11.1363
+friends -10.3582
+(u'iphone', u'5') -10.3417
+aggressive -9.4394
+(u'unveils', u'aggressive') -9.1934
+(u'tmobile', u'unveils') -9.1312
+(u'pricing', u'with', u'no') -9.0121
+(u'pricing', u'with') -9.0121
+(u'phone', u'pricing', u'with') -9.0121
+(u'tmobile', u'unveils', u'aggressive') -8.9981
+(u'aggressive', u'phone') -8.9581
+Most-----------------------------------------------------------
+(u'bounce', u'back') 14.9692
+economic 15.1135
+(u'us', u'stocks', u'open') 15.3168
+yahoo 15.4636
+gains 16.0337
+street 16.3717
+facebook 16.6933
+(u'stocks', u'open', u'higher') 18.8836
+(u'stocks', u'open') 18.9036
+tech 19.3273
+report 19.4624
+apple 19.7831
+(u'open', u'higher') 20.1894
+video 22.4932
+google 23.0399
+via 24.7589
+data 30.8155
+(u'us', u'stocks') 31.7701
+news 33.1455
+
+
+lag:50
+Least-----------------------------------------------------------
+icann -9.2973
+(u'iphone', u'5') -9.0222
+tmobile -8.7525
+faster -7.3192
+recover -7.2554
+april -7.2492
+disaster -7.2268
+emergency -7.1171
+cooker -7.1115
+(u'april', u'12') -6.9805
+(u'victims', u'recover') -6.9445
+(u'disaster', u'victims', u'recover') -6.9445
+(u'recover', u'faster') -6.9445
+(u'cooker', u'could') -6.9445
+(u'solar', u'cooker') -6.9445
+(u'emergency', u'solar', u'cooker') -6.9445
+(u'help', u'disaster') -6.9445
+(u'victims', u'recover', u'faster') -6.9445
+(u'could', u'help', u'disaster') -6.9445
+(u'help', u'disaster', u'victims') -6.9445
+Most-----------------------------------------------------------
+(u'bouncing', u'from', u'mondays') 29.7259
+(u'on', u'home') 29.7928
+gate 29.9305
+jumped 29.9459
+(u'us', u'stocks', u'bounce') 30.1693
+mondays 30.3898
+(u'out', u'of', u'the') 30.6756
+via 30.9437
+(u'stocks', u'bounce') 31.4663
+(u'stocks', u'bounce', u'back') 31.4781
+(u'out', u'of') 32.8217
+(u'of', u'the') 34.6678
+home 35.4867
+data 35.9575
+apple 40.0614
+bounce 40.4583
+(u'bounce', u'back') 40.4701
+news 41.9505
+(u'us', u'stocks') 59.4045
+
+
+lag:60
+Least-----------------------------------------------------------
+tmobile -16.7116
+(u'iphone', u'5') -14.7263
+5 -13.153
+facebooks -9.7509
+friends -9.6096
+april -9.3685
+iphone -8.3975
+(u'april', u'12') -7.5228
+handsets -7.4629
+(u'friends', u'and') -7.0777
+distributor -6.6489
+(u'buyer', u'of') -6.48
+(u'as', u'distributor', u'to') -6.48
+(u'handsets', u'revealed') -6.48
+bb10 -6.48
+(u'bb10', u'handsets', u'revealed') -6.48
+(u'distributor', u'to', u'verizon') -6.48
+(u'revealed', u'as') -6.48
+(u'revealed', u'as', u'distributor') -6.48
+(u'handsets', u'revealed', u'as') -6.48
+Most-----------------------------------------------------------
+(u'stocks', u'bounce', u'back') 26.9455
+(u'stocks', u'bounce') 26.9798
+(u'us', u'patent') 27.4235
+patent 27.4619
+(u'stocks', u'open', u'higher') 27.6555
+(u'stocks', u'open') 27.8156
+(u'open', u'higher') 28.9076
+(u'out', u'of') 28.908
+home 30.0346
+look 30.2324
+video 32.4148
+(u'of', u'the') 33.2567
+via 33.8597
+(u'bounce', u'back') 34.6758
+bounce 34.7101
+apple 35.769
+data 36.0297
+news 42.366
+(u'us', u'stocks') 53.5363
+
+
+lag:70
+Least-----------------------------------------------------------
+tmobile -20.1714
+5 -14.7102
+(u'iphone', u'5') -14.4467
+(u'no', u'look') -11.6993
+(u'apple', u'patents') -11.6192
+(u'patents', u'no') -11.5586
+(u'patents', u'no', u'look') -11.5586
+(u'apple', u'patents', u'no') -11.4912
+patents -11.4644
+(u'no', u'look', u'technology') -11.351
+(u'look', u'technology') -11.311
+april -9.4666
+handsets -8.897
+iphone -8.8415
+(u'on', u'economy') -8.0798
+(u'record', u'still') -7.9483
+eludes -7.9301
+(u'still', u'eludes') -7.9301
+(u'record', u'still', u'eludes') -7.9301
+(u'april', u'12') -7.8505
+Most-----------------------------------------------------------
+(u'of', u'the') 21.0638
+gains 21.4774
+(u'us', u'stocks', u'open') 22.1093
+google 22.5002
+game 22.5308
+amp 22.5926
+facebook 23.9222
+(u'video', u'game') 24.4893
+(u'stocks', u'open', u'higher') 27.2144
+(u'stocks', u'open') 27.3384
+report 27.6589
+(u'open', u'higher') 28.6408
+via 29.0552
+(u'bounce', u'back') 29.9954
+bounce 30.1314
+data 34.7703
+video 38.2104
+news 44.3076
+(u'us', u'stocks') 49.8742
+
+
+lag:80
+Least-----------------------------------------------------------
+(u'no', u'look') -51.0527
+patents -51.0029
+(u'apple', u'patents') -50.9495
+(u'patents', u'no') -50.8038
+(u'patents', u'no', u'look') -50.8038
+(u'apple', u'patents', u'no') -50.7114
+(u'no', u'look', u'technology') -50.3857
+(u'look', u'technology') -50.3757
+look -49.0078
+apple -44.3326
+(u'us', u'patent') -37.3314
+patent -37.2164
+tmobile -28.1041
+apples -21.8507
+(u'us', u'patent', u'and') -20.7361
+(u'and', u'trademark') -20.7361
+(u'the', u'us', u'patent') -20.7361
+(u'and', u'trademark', u'office') -20.7361
+(u'patent', u'and', u'trademark') -20.7361
+(u'trademark', u'office') -20.7361
+Most-----------------------------------------------------------
+(u'bounce', u'back') 21.1097
+bounce 21.3455
+inc 21.6174
+europe 22.684
+game 22.9915
+(u'video', u'game') 24.1078
+facebook 25.226
+amp 25.6499
+gains 26.6038
+(u'us', u'stocks', u'open') 27.0415
+icann 27.7176
+(u'stocks', u'open', u'higher') 31.775
+report 31.7974
+(u'stocks', u'open') 31.933
+(u'open', u'higher') 33.8503
+video 37.4019
+data 41.7352
+news 42.2309
+(u'us', u'stocks') 46.7723
+
+
+lag:90
+Least-----------------------------------------------------------
+(u'no', u'look') -61.9126
+patents -61.7287
+(u'apple', u'patents') -61.6724
+(u'patents', u'no') -61.4612
+(u'patents', u'no', u'look') -61.4612
+(u'apple', u'patents', u'no') -61.3928
+(u'no', u'look', u'technology') -61.1239
+(u'look', u'technology') -61.0249
+look -57.7014
+apple -53.3975
+patent -52.0663
+(u'us', u'patent') -51.4953
+tmobile -37.8731
+apples -29.8683
+trademark -28.6211
+(u'us', u'patent', u'and') -28.5671
+(u'and', u'trademark') -28.5671
+(u'the', u'us', u'patent') -28.5671
+(u'and', u'trademark', u'office') -28.5671
+(u'patent', u'and', u'trademark') -28.5671
+Most-----------------------------------------------------------
+(u'us', u'stocks', u'bounce') 20.5172
+(u'stocks', u'bounce') 20.6973
+street 20.9754
+amp 21.134
+(u'of', u'the') 21.5087
+(u'us', u'stocks', u'open') 22.6473
+home 22.7852
+facebook 26.1289
+gains 26.4239
+report 28.1651
+video 30.1943
+(u'bounce', u'back') 31.0412
+(u'stocks', u'open', u'higher') 31.0792
+(u'stocks', u'open') 31.2292
+bounce 31.5012
+(u'open', u'higher') 33.3246
+news 39.0876
+data 40.608
+(u'us', u'stocks') 58.6289
+
+

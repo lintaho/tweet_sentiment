@@ -1,0 +1,396 @@
+lag:10
+Least-----------------------------------------------------------
+hands -5.2897
+doctors -4.8503
+wristband -4.6566
+properly -4.634
+(u'hands', u'properly') -4.5796
+washing -4.5366
+(u'ensures', u'doctors') -4.4696
+(u'doctors', u'are') -4.4696
+(u'wristband', u'ensures') -4.4696
+(u'tech', u'wristband', u'ensures') -4.4696
+(u'washing', u'hands', u'properly') -4.4696
+(u'are', u'washing', u'hands') -4.4696
+(u'wristband', u'ensures', u'doctors') -4.4696
+(u'washing', u'hands') -4.4696
+(u'tech', u'wristband') -4.4696
+(u'doctors', u'are', u'washing') -4.4696
+(u'high', u'tech', u'wristband') -4.4696
+(u'are', u'washing') -4.4696
+(u'ensures', u'doctors', u'are') -4.4696
+ensures -4.3801
+Most-----------------------------------------------------------
+(u'global', u'internet', u'slows') 27.6376
+(u'global', u'internet') 27.6497
+(u'attack', u'in', u'history') 27.698
+(u'internet', u'slows') 27.7225
+(u'slows', u'after', u'biggest') 28.2788
+(u'internet', u'slows', u'after') 28.4777
+(u'slows', u'after') 28.4778
+global 29.0984
+(u'attack', u'in') 29.1461
+(u'biggest', u'attack', u'in') 29.3981
+(u'after', u'biggest', u'attack') 29.8509
+(u'after', u'biggest') 29.8683
+(u'biggest', u'attack') 32.5308
+attack 44.9428
+(u'in', u'history') 51.3541
+history 52.1199
+slows 61.9582
+biggest 67.9197
+internet 83.7658
+
+
+lag:20
+Least-----------------------------------------------------------
+(u'largest', u'recorded') -11.425
+(u'recorded', u'attack') -11.425
+(u'recorded', u'attack', u'on') -11.425
+(u'largest', u'recorded', u'attack') -11.425
+recorded -11.3984
+(u'on', u'the', u'internet') -11.3162
+(u'attack', u'on', u'the') -11.1613
+(u'attack', u'on') -10.3809
+largest -10.2973
+doctors -8.1724
+properly -7.8801
+wristband -7.6463
+(u'hands', u'properly') -7.6408
+ensures -7.5787
+washing -7.5033
+(u'ensures', u'doctors') -7.5008
+(u'doctors', u'are') -7.5008
+(u'wristband', u'ensures') -7.5008
+(u'tech', u'wristband', u'ensures') -7.5008
+(u'washing', u'hands', u'properly') -7.5008
+Most-----------------------------------------------------------
+lying 60.1976
+(u'your', u'life') 60.8163
+(u'in', u'history', u'slows') 61.3018
+(u'history', u'slows') 61.5308
+(u'how', u'will') 61.6489
+wave 61.8738
+(u'the', u'new') 61.9064
+story 62.0084
+cyberattack 62.4205
+life 62.6902
+wearable 63.7308
+(u'and', u'the') 66.8847
+attack 75.0387
+tech 89.9017
+(u'in', u'history') 108.1361
+history 110.0182
+slows 133.6237
+biggest 143.5586
+internet 164.743
+
+
+lag:30
+Least-----------------------------------------------------------
+matter -13.6178
+(u'for', u'technology', u'startups') -12.6545
+(u'technology', u'startups') -12.641
+wiseradar -12.639
+(u'matter', u'for') -12.6275
+(u'news', u'that') -12.6231
+(u'technology', u'startups', u'exclusive') -12.612
+(u'matter', u'for', u'technology') -12.612
+(u'that', u'matter', u'for') -12.612
+(u'wiseradar', u'news') -12.612
+(u'startups', u'exclusive', u'preview') -12.612
+(u'startups', u'exclusive') -12.612
+(u'wiseradar', u'news', u'that') -12.612
+(u'news', u'that', u'matter') -12.612
+(u'exclusive', u'preview') -12.612
+(u'that', u'matter') -12.5255
+exclusive -12.3016
+(u'for', u'technology') -11.4358
+preview -10.2093
+(u'largest', u'recorded') -10.153
+Most-----------------------------------------------------------
+(u'history', u'slows') 53.5297
+(u'your', u'life') 53.6981
+(u'how', u'will') 54.3484
+life 54.8185
+cyberattack 56.1567
+wearable 56.17
+story 57.1619
+(u'the', u'new') 57.3617
+(u'attack', u'in', u'history') 57.716
+(u'and', u'the') 57.8153
+(u'attack', u'in') 59.4598
+(u'biggest', u'attack') 74.2924
+tech 89.8607
+attack 93.7478
+(u'in', u'history') 107.8014
+history 109.3009
+slows 132.234
+internet 152.166
+biggest 154.8633
+
+
+lag:40
+Least-----------------------------------------------------------
+largest -11.5097
+(u'largest', u'recorded') -11.4492
+(u'recorded', u'attack') -11.4492
+(u'recorded', u'attack', u'on') -11.4492
+(u'largest', u'recorded', u'attack') -11.4492
+recorded -11.4472
+(u'attack', u'on', u'the') -11.3692
+(u'attack', u'on') -10.9218
+(u'on', u'the', u'internet') -10.7028
+matter -8.4001
+(u'blackberry', u'z10') -7.7393
+(u'for', u'technology', u'startups') -7.4834
+(u'technology', u'startups') -7.4492
+(u'matter', u'for') -7.4294
+z10 -7.4169
+(u'that', u'matter') -7.3634
+wiseradar -7.3509
+(u'technology', u'startups', u'exclusive') -7.2969
+(u'matter', u'for', u'technology') -7.2969
+(u'that', u'matter', u'for') -7.2969
+Most-----------------------------------------------------------
+wearable 54.1076
+(u'biggest', u'attack', u'in') 54.1727
+(u'slows', u'after') 54.4
+(u'internet', u'slows', u'after') 54.453
+(u'global', u'internet') 54.6207
+(u'after', u'biggest', u'attack') 55.4871
+global 55.6364
+(u'after', u'biggest') 56.0478
+cyberattack 58.0894
+(u'attack', u'in', u'history') 60.9319
+(u'attack', u'in') 63.1406
+tech 80.877
+(u'biggest', u'attack') 88.3957
+attack 109.2169
+(u'in', u'history') 113.0508
+history 114.6294
+slows 149.9218
+internet 155.1692
+biggest 174.6158
+
+
+lag:50
+Least-----------------------------------------------------------
+largest -12.3805
+(u'largest', u'recorded') -11.4518
+(u'recorded', u'attack') -11.4518
+(u'recorded', u'attack', u'on') -11.4518
+(u'largest', u'recorded', u'attack') -11.4518
+recorded -11.4124
+matter -11.3644
+(u'attack', u'on') -10.9553
+(u'attack', u'on', u'the') -10.8272
+(u'on', u'the', u'internet') -10.6563
+(u'for', u'technology', u'startups') -10.3001
+(u'matter', u'for') -10.2601
+wiseradar -10.2346
+(u'technology', u'startups') -10.23
+(u'that', u'matter') -10.2181
+(u'technology', u'startups', u'exclusive') -10.1946
+(u'matter', u'for', u'technology') -10.1946
+(u'that', u'matter', u'for') -10.1946
+(u'wiseradar', u'news') -10.1946
+(u'startups', u'exclusive', u'preview') -10.1946
+Most-----------------------------------------------------------
+(u'history', u'slows') 61.2365
+(u'after', u'biggest', u'attack') 61.2876
+(u'internet', u'slows', u'after') 61.3758
+(u'slows', u'after') 61.5692
+(u'after', u'biggest') 61.9457
+(u'and', u'the') 62.0117
+(u'the', u'new') 63.0375
+cyberattack 65.2885
+(u'attack', u'in', u'history') 67.7674
+(u'attack', u'in') 69.7015
+wearable 71.2944
+(u'biggest', u'attack') 89.4487
+tech 94.8125
+attack 110.2034
+(u'in', u'history') 126.9866
+history 128.7119
+slows 160.7173
+internet 160.9191
+biggest 185.2531
+
+
+lag:60
+Least-----------------------------------------------------------
+largest -14.0848
+(u'one', u'of', u'the') -12.2501
+(u'on', u'the', u'internet') -11.5562
+(u'largest', u'recorded') -11.469
+(u'recorded', u'attack') -11.469
+(u'recorded', u'attack', u'on') -11.469
+(u'largest', u'recorded', u'attack') -11.469
+(u'one', u'of') -11.4414
+recorded -11.3927
+(u'attack', u'on') -11.108
+(u'attack', u'on', u'the') -11.0145
+kenyas -10.0758
+(u'odinga', u'says', u'technology') -9.9018
+odinga -9.9018
+(u'odinga', u'says') -9.9018
+(u'kenyas', u'odinga', u'says') -9.8638
+(u'kenyas', u'odinga') -9.8638
+failures -9.8002
+(u'to', u'vote') -9.7483
+(u'led', u'to') -9.7428
+Most-----------------------------------------------------------
+(u'internet', u'slows', u'after') 62.695
+(u'slows', u'after') 62.875
+(u'internet', u'slows') 63.0844
+(u'global', u'internet') 63.1182
+(u'the', u'new') 63.254
+(u'global', u'internet', u'slows') 63.6109
+(u'biggest', u'attack', u'in') 63.7045
+cyberattack 65.227
+wearable 67.5275
+(u'attack', u'in', u'history') 67.539
+(u'attack', u'in') 70.8048
+(u'biggest', u'attack') 90.0326
+tech 110.0227
+attack 111.1765
+(u'in', u'history') 126.4344
+history 129.2011
+slows 162.8753
+internet 173.8905
+biggest 185.3605
+
+
+lag:70
+Least-----------------------------------------------------------
+(u'one', u'of', u'the') -14.5764
+largest -14.533
+(u'one', u'of') -13.4513
+maps -10.7031
+theres -10.634
+(u'war', u'going', u'on') -10.4308
+(u'war', u'going') -10.4308
+(u'a', u'war', u'going') -10.307
+(u'theres', u'a', u'war') -10.307
+(u'slow', u'internet', u'no') -10.2606
+(u'wonder', u'theres') -10.2606
+(u'internet', u'no') -10.2606
+(u'no', u'wonder', u'theres') -10.2606
+(u'internet', u'no', u'wonder') -10.2606
+(u'wonder', u'theres', u'a') -10.2606
+(u'attack', u'on') -10.2547
+(u'on', u'the', u'internet') -10.2336
+(u'a', u'war') -10.225
+(u'mayer', u'slow') -10.2006
+(u'mayer', u'slow', u'internet') -10.2006
+Most-----------------------------------------------------------
+(u'biggest', u'cyberattack', u'in') 63.5222
+(u'history', u'slows') 63.6026
+(u'slows', u'down') 63.6405
+(u'after', u'biggest') 63.8507
+(u'cyberattack', u'in', u'history') 63.9171
+(u'cyberattack', u'in') 64.0171
+(u'biggest', u'cyberattack') 64.2963
+(u'attack', u'in', u'history') 64.8567
+wearable 65.6501
+(u'attack', u'in') 68.2583
+cyberattack 69.0357
+(u'biggest', u'attack') 95.2417
+tech 106.0408
+attack 119.7224
+(u'in', u'history') 127.4285
+history 129.5886
+slows 174.5134
+internet 178.8449
+biggest 199.7416
+
+
+lag:80
+Least-----------------------------------------------------------
+(u'one', u'of', u'the') -21.7526
+(u'one', u'of') -21.2412
+cyprus -14.315
+failures -13.4377
+kenyas -13.4023
+fraud -13.2661
+(u'kenyas', u'odinga', u'says') -13.2033
+(u'kenyas', u'odinga') -13.2033
+(u'odinga', u'says', u'technology') -13.1746
+odinga -13.1746
+(u'odinga', u'says') -13.1746
+(u'led', u'to') -13.0265
+(u'to', u'vote') -13.0174
+(u'technology', u'failures') -12.9611
+(u'failures', u'led') -12.9611
+(u'led', u'to', u'vote') -12.9611
+(u'to', u'vote', u'fraud') -12.9611
+(u'technology', u'failures', u'led') -12.9611
+(u'vote', u'fraud') -12.9611
+(u'says', u'technology', u'failures') -12.9611
+Most-----------------------------------------------------------
+(u'and', u'the') 88.5091
+(u'in', u'history', u'slows') 88.5175
+(u'biggest', u'cyberattack', u'in') 88.6165
+(u'history', u'slows') 88.847
+(u'cyberattack', u'in', u'history') 89.0625
+(u'cyberattack', u'in') 89.0926
+(u'slows', u'down') 89.1178
+wearable 89.2101
+(u'biggest', u'cyberattack') 89.4759
+(u'the', u'new') 90.4744
+cyberattack 91.5111
+(u'biggest', u'attack') 105.615
+tech 126.7169
+attack 140.8635
+(u'in', u'history') 154.5153
+history 157.1527
+slows 214.9252
+internet 229.1248
+biggest 241.2244
+
+
+lag:90
+Least-----------------------------------------------------------
+(u'one', u'of', u'the') -22.036
+(u'one', u'of') -21.2424
+(u'an', u'internet') -12.9468
+(u'a', u'documentary') -12.9158
+(u'internet', u'angel') -12.8049
+(u'angel', u'for') -12.8049
+(u'angel', u'for', u'a') -12.8049
+(u'an', u'internet', u'angel') -12.8049
+(u'internet', u'angel', u'for') -12.8049
+(u'for', u'a', u'documentary') -12.8049
+documentary -12.802
+angel -12.5864
+maps -12.4998
+(u'on', u'eurozone') -12.1245
+failures -12.074
+kenyas -11.764
+fraud -11.7638
+theres -11.6137
+(u'led', u'to') -11.5563
+(u'odinga', u'says', u'technology') -11.478
+Most-----------------------------------------------------------
+(u'slows', u'down', u'internet') 82.9329
+(u'slows', u'down') 83.5483
+(u'how', u'will') 83.7115
+cyberattack 84.622
+wave 84.9424
+story 85.3634
+(u'in', u'history', u'slows') 85.4494
+(u'history', u'slows') 85.817
+(u'and', u'the') 86.6525
+(u'the', u'new') 86.976
+wearable 88.8949
+(u'biggest', u'attack') 108.0664
+tech 122.5423
+attack 144.3636
+(u'in', u'history') 146.8012
+history 149.8333
+slows 206.6675
+internet 220.9796
+biggest 232.6955
+
+

@@ -1,0 +1,396 @@
+lag:10
+Least-----------------------------------------------------------
+pictures -8.8583
+facebook -8.8125
+marriage -8.4899
+27 -8.3022
+(u'million', u'people') -8.2759
+(u'27', u'million', u'people') -8.217
+(u'27', u'million') -8.1619
+support -7.994
+profile -7.7728
+(u'profile', u'pictures') -7.5978
+(u'rt', u'facebook') -6.9615
+million -6.5242
+people -6.2282
+(u'million', u'people', u'showed') -4.7503
+(u'people', u'showed', u'their') -4.7399
+(u'people', u'showed') -4.6892
+(u'their', u'support', u'for') -4.6863
+equality -4.6618
+(u'marriage', u'equality') -4.6488
+(u'support', u'for') -4.6446
+Most-----------------------------------------------------------
+(u'rt', u'thats') 5.0233
+23 5.0436
+(u'recent', u'cyberattacks') 5.045
+tatooinelike 5.0725
+destruction 5.1278
+images 5.1924
+research 5.223
+scientists 5.3337
+recent 5.4483
+iphone 5.4494
+thats 5.8037
+(u'on', u'the') 5.8281
+news 6.6283
+(u'cyberattacks', u'seem') 6.7442
+(u'of', u'the') 7.0356
+internet 7.4311
+data 7.7294
+cyberattacks 7.9338
+via 12.0912
+
+
+lag:20
+Least-----------------------------------------------------------
+(u'27', u'million') -7.9561
+(u'million', u'people') -7.854
+27 -7.8434
+(u'27', u'million', u'people') -7.681
+marriage -7.6074
+facebook -7.2934
+pictures -7.0649
+million -6.7748
+support -6.5484
+(u'rt', u'facebook') -6.2756
+profile -6.2553
+(u'profile', u'pictures') -5.7756
+people -4.4127
+(u'support', u'for') -4.092
+(u'facebook', u'says', u'27') -4.0722
+(u'facebook', u'says') -4.0722
+(u'says', u'27') -4.0442
+(u'of', u'samesex') -4.0022
+(u'of', u'samesex', u'marriage') -4.0022
+(u'support', u'of', u'samesex') -4.0022
+Most-----------------------------------------------------------
+sprint 12.9479
+equipment 12.9917
+(u'and', u'softbank') 12.995
+(u'sprint', u'and', u'softbank') 12.995
+(u'to', u'drop', u'huawei') 13.0025
+(u'softbank', u'vow') 13.0025
+(u'drop', u'huawei', u'equipment') 13.0025
+(u'vow', u'to', u'drop') 13.0025
+(u'drop', u'huawei') 13.0025
+(u'softbank', u'vow', u'to') 13.0025
+vow 13.0025
+(u'vow', u'to') 13.0025
+(u'and', u'softbank', u'vow') 13.011
+(u'sprint', u'and') 13.1257
+softbank 13.1979
+drop 13.6089
+(u'to', u'drop') 13.6294
+details 13.955
+via 22.2922
+
+
+lag:30
+Least-----------------------------------------------------------
+million -10.3529
+27 -10.1394
+marriage -10.1355
+(u'million', u'people') -9.8732
+(u'27', u'million') -9.7832
+(u'27', u'million', u'people') -9.6497
+pictures -8.7219
+facebook -8.4796
+support -8.1514
+people -7.5633
+profile -7.5351
+(u'profile', u'pictures') -7.1806
+(u'rt', u'facebook') -6.8411
+(u'people', u'showed') -5.6932
+(u'support', u'for', u'marriage') -5.6884
+(u'million', u'people', u'showed') -5.6192
+(u'people', u'showed', u'their') -5.6068
+(u'their', u'support') -5.5768
+(u'their', u'support', u'for') -5.5768
+(u'showed', u'their', u'support') -5.5768
+Most-----------------------------------------------------------
+vow 11.147
+(u'vow', u'to') 11.147
+(u'stocks', u'to', u'watch') 11.1484
+huawei 11.2314
+sprint 11.3405
+(u'and', u'softbank', u'vow') 11.3609
+(u'and', u'softbank') 11.3639
+(u'sprint', u'and', u'softbank') 11.3639
+read 11.3653
+drop 11.3822
+(u'sprint', u'and') 11.4405
+softbank 11.5304
+details 11.5515
+(u'to', u'watch') 11.6157
+(u'to', u'drop') 11.6299
+equipment 11.7769
+(u'of', u'the') 12.2616
+watch 12.2976
+via 22.3462
+
+
+lag:40
+Least-----------------------------------------------------------
+27 -11.7957
+(u'million', u'people') -11.6096
+marriage -11.5097
+(u'27', u'million') -11.4373
+(u'27', u'million', u'people') -11.3832
+facebook -10.169
+pictures -10.0935
+support -8.802
+million -8.6242
+profile -8.5379
+(u'profile', u'pictures') -8.3283
+people -8.1502
+(u'rt', u'facebook') -8.0849
+(u'says', u'27') -6.7636
+(u'facebook', u'says', u'27') -6.7396
+(u'facebook', u'says') -6.7396
+(u'people', u'changed') -6.6724
+(u'of', u'samesex') -6.6696
+(u'of', u'samesex', u'marriage') -6.6696
+(u'support', u'of', u'samesex') -6.6696
+Most-----------------------------------------------------------
+sprint 10.5091
+(u'sprint', u'and') 10.5144
+softbank 10.541
+story 10.572
+internet 10.8652
+(u'to', u'drop') 10.8854
+equipment 10.9099
+tech 11.0159
+(u'on', u'the') 11.0174
+drop 11.2479
+news 12.0189
+read 12.1078
+details 12.1923
+(u'stocks', u'to', u'watch') 14.1533
+(u'to', u'watch') 14.7124
+(u'stocks', u'to') 14.9854
+watch 15.4051
+(u'of', u'the') 15.8958
+via 25.604
+
+
+lag:50
+Least-----------------------------------------------------------
+pictures -13.6863
+marriage -12.8875
+(u'million', u'people') -12.7456
+27 -12.7437
+(u'27', u'million') -12.5852
+(u'27', u'million', u'people') -12.4606
+million -9.9212
+facebook -9.7368
+profile -9.5512
+(u'profile', u'pictures') -9.3495
+(u'rt', u'facebook') -9.3081
+(u'says', u'27') -9.2031
+samesex -9.1731
+(u'facebook', u'says', u'27') -9.1731
+(u'facebook', u'says') -9.1731
+(u'samesex', u'marriage') -9.1731
+(u'people', u'changed') -9.1181
+(u'changed', u'profile') -9.0731
+(u'changed', u'profile', u'pictures') -9.0231
+(u'people', u'changed', u'profile') -9.0231
+Most-----------------------------------------------------------
+cyberattacks 11.7242
+sprint 11.8027
+softbank 11.8181
+(u'and', u'softbank', u'vow') 11.8505
+equipment 11.875
+(u'and', u'softbank') 11.9685
+(u'sprint', u'and', u'softbank') 11.9685
+(u'sprint', u'and') 11.9801
+story 12.0963
+business 12.3843
+(u'to', u'drop') 12.4109
+internet 12.5998
+drop 12.609
+read 13.3344
+details 14.5537
+(u'on', u'the') 15.1438
+news 19.1176
+(u'of', u'the') 19.7539
+via 31.5148
+
+
+lag:60
+Least-----------------------------------------------------------
+pictures -13.267
+marriage -12.769
+(u'million', u'people') -12.7236
+(u'27', u'million', u'people') -12.3676
+27 -12.3194
+(u'27', u'million') -12.2731
+profile -9.5574
+people -9.4759
+(u'profile', u'pictures') -9.4392
+million -8.9691
+(u'rt', u'facebook') -8.9621
+support -8.1345
+facebook -7.401
+(u'nasa', u'or') -7.3178
+(u'or', u'moma') -7.2708
+(u'nasa', u'or', u'moma') -7.2418
+moma -7.1951
+(u'people', u'changed') -7.1391
+(u'says', u'27') -7.0271
+(u'changed', u'profile') -6.9931
+Most-----------------------------------------------------------
+(u'and', u'softbank', u'vow') 11.415
+softbank 11.4386
+sprint 11.4593
+(u'sprint', u'and') 11.591
+(u'to', u'drop') 11.7888
+tech 11.9263
+(u'cyberattacks', u'seem') 12.012
+drop 12.0533
+data 12.2631
+read 12.2691
+story 13.1659
+business 13.4073
+internet 13.4418
+details 13.6101
+cyberattacks 14.3682
+(u'on', u'the') 14.9369
+news 18.4321
+(u'of', u'the') 19.6403
+via 34.6567
+
+
+lag:70
+Least-----------------------------------------------------------
+pictures -13.8529
+marriage -12.0457
+(u'million', u'people') -11.4248
+(u'27', u'million', u'people') -11.0488
+(u'27', u'million') -11.0204
+27 -10.8897
+electrosensitivity -9.5367
+killing -9.32
+(u'electrosensitivity', u'is', u'technology') -9.154
+(u'is', u'technology', u'killing') -9.154
+(u'killing', u'us') -9.154
+(u'technology', u'killing', u'us') -9.154
+(u'technology', u'killing') -9.154
+(u'electrosensitivity', u'is') -9.154
+nasa -8.4932
+people -8.412
+moma -8.3102
+(u'nasa', u'or') -8.1978
+(u'or', u'moma') -8.1844
+(u'nasa', u'or', u'moma') -8.1458
+Most-----------------------------------------------------------
+(u'to', u'drop') 11.5195
+equipment 11.5265
+softbank 11.5317
+drop 11.6062
+blackberry 11.7671
+sprint 11.8235
+business 12.5164
+tool 12.5952
+internet 12.7113
+data 12.7652
+day 12.767
+story 13.2277
+details 13.8818
+(u'cyberattacks', u'seem') 15.334
+(u'on', u'the') 15.8592
+news 16.8277
+cyberattacks 17.8048
+(u'of', u'the') 19.0963
+via 33.619
+
+
+lag:80
+Least-----------------------------------------------------------
+pictures -13.9925
+nasa -11.5299
+moma -11.057
+(u'nasa', u'or') -10.8335
+(u'or', u'moma') -10.706
+(u'nasa', u'or', u'moma') -10.6835
+electrosensitivity -10.6598
+killing -10.43
+(u'electrosensitivity', u'is', u'technology') -10.2777
+(u'is', u'technology', u'killing') -10.2777
+(u'killing', u'us') -10.2777
+(u'technology', u'killing', u'us') -10.2777
+(u'technology', u'killing') -10.2777
+(u'electrosensitivity', u'is') -10.2777
+marriage -9.5673
+facebook -8.8613
+(u'million', u'people') -8.8
+(u'27', u'million') -8.5653
+(u'27', u'million', u'people') -8.4909
+27 -8.3402
+Most-----------------------------------------------------------
+(u'full', u'story', u'for') 17.233
+(u'read', u'full') 17.233
+(u'read', u'full', u'story') 17.233
+(u'and', u'softbank') 17.3325
+(u'sprint', u'and', u'softbank') 17.3325
+(u'and', u'softbank', u'vow') 17.3825
+(u'sprint', u'and') 17.413
+internet 17.5676
+softbank 17.6594
+sprint 17.863
+equipment 17.8652
+(u'to', u'drop') 17.9802
+drop 18.2421
+(u'of', u'the') 18.6965
+news 19.0381
+read 19.1147
+story 19.5117
+details 22.1854
+via 36.633
+
+
+lag:90
+Least-----------------------------------------------------------
+pictures -12.5586
+nasa -10.837
+moma -10.7504
+electrosensitivity -10.5454
+(u'nasa', u'or') -10.4818
+(u'nasa', u'or', u'moma') -10.3788
+(u'or', u'moma') -10.3788
+killing -10.0361
+(u'electrosensitivity', u'is', u'technology') -9.8777
+(u'is', u'technology', u'killing') -9.8777
+(u'killing', u'us') -9.8777
+(u'technology', u'killing', u'us') -9.8777
+(u'technology', u'killing') -9.8777
+(u'electrosensitivity', u'is') -9.8777
+marriage -8.5601
+(u'million', u'people') -7.9929
+(u'27', u'million', u'people') -7.654
+(u'27', u'million') -7.5913
+(u'is', u'technology') -7.4002
+(u'killing', u'us', u'in') -7.1469
+Most-----------------------------------------------------------
+(u'vow', u'to', u'drop') 17.3542
+(u'drop', u'huawei') 17.3542
+(u'softbank', u'vow', u'to') 17.3542
+vow 17.3542
+(u'vow', u'to') 17.3542
+(u'and', u'softbank') 17.517
+(u'sprint', u'and', u'softbank') 17.517
+(u'and', u'softbank', u'vow') 17.553
+(u'sprint', u'and') 17.6943
+softbank 17.8449
+equipment 17.9043
+sprint 17.9736
+news 18.2416
+(u'to', u'drop') 18.2501
+drop 18.3512
+story 18.7454
+read 19.4578
+details 22.3774
+via 32.2001
+
+

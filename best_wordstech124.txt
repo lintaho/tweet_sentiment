@@ -1,0 +1,396 @@
+lag:10
+Least-----------------------------------------------------------
+(u'this', u'is') -26.0886
+fn -22.403
+expensive -19.017
+(u'too', u'expensive') -18.7825
+(u'kind', u'of') -18.1551
+(u'this', u'kind', u'of') -18.1284
+(u'this', u'kind') -18.1284
+particular -17.9769
+(u'this', u'particular') -17.4759
+(u'now', u'this') -15.1379
+haha -13.7444
+platini -13.0965
+(u'goalline', u'technology') -12.9714
+goalline -12.9429
+(u'technology', u'is', u'too') -12.3378
+(u'goalline', u'technology', u'is') -12.2359
+(u'platini', u'says') -12.1624
+(u'is', u'too') -12.1553
+(u'platini', u'says', u'goalline') -12.002
+(u'says', u'goalline') -11.9984
+Most-----------------------------------------------------------
+world 5.467
+news 5.4772
+(u'what', u'a') 5.4916
+(u'for', u'new') 5.5006
+(u'on', u'the') 5.6439
+(u'technology', u'to') 5.6501
+(u'made', u'in') 5.8112
+(u'rt', u'stocks') 5.9676
+sales 6.2431
+(u'us', u'stocks') 6.475
+(u'in', u'technology') 6.6315
+google 7.1688
+(u'stocks', u'open') 7.9193
+blackberry 8.1373
+2013 8.5091
+people 8.5714
+internet 8.6128
+via 10.3321
+business 13.0674
+
+
+lag:20
+Least-----------------------------------------------------------
+(u'this', u'is') -50.9808
+fn -42.3271
+(u'kind', u'of') -36.0467
+(u'this', u'kind', u'of') -35.9646
+(u'this', u'kind') -35.9646
+particular -33.6432
+(u'this', u'particular') -32.3688
+expensive -30.747
+(u'too', u'expensive') -30.5629
+(u'now', u'this') -29.666
+haha -27.0903
+cant -22.4173
+lol -22.322
+goalline -21.0678
+funny -20.9407
+omfg -20.8921
+(u'goalline', u'technology') -20.6503
+(u'technology', u'is', u'too') -18.801
+(u'is', u'too') -18.7208
+platini -18.6646
+Most-----------------------------------------------------------
+(u'for', u'new') 9.839
+(u'what', u'a') 9.8496
+google 10.0504
+inc 10.5296
+(u'made', u'in') 10.5345
+tech 10.7213
+(u'in', u'technology') 10.7958
+market 11.1931
+(u'of', u'technology') 11.3818
+2013 11.8776
+(u'stocks', u'open') 12.0987
+profit 12.6058
+internet 13.6869
+business 14.5693
+amp 14.7738
+people 15.3228
+via 21.7697
+news 27.6425
+blackberry 32.4288
+
+
+lag:30
+Least-----------------------------------------------------------
+(u'this', u'is') -76.1583
+fn -60.1915
+(u'this', u'kind', u'of') -51.4201
+(u'this', u'kind') -51.4201
+(u'kind', u'of') -51.3801
+particular -48.2687
+(u'this', u'particular') -46.2304
+(u'now', u'this') -43.8148
+expensive -43.1818
+(u'too', u'expensive') -42.9654
+haha -39.6575
+lol -32.793
+goalline -29.892
+cant -29.7783
+omfg -29.7349
+funny -29.4257
+(u'goalline', u'technology') -28.9419
+platini -27.8598
+omg -26.9731
+(u'this', u'really') -26.3363
+Most-----------------------------------------------------------
+(u'taurus', u'loves') 17.0649
+(u'technology', u'but', u'isnt') 17.0649
+(u'taurus', u'loves', u'the') 17.0649
+(u'isnt', u'controlled') 17.0649
+(u'loves', u'the', u'comforts') 17.0649
+(u'the', u'comforts') 17.0649
+(u'loves', u'the') 17.0649
+(u'of', u'modern', u'technology') 17.0829
+(u'controlled', u'by') 17.0937
+(u'modern', u'technology', u'but') 17.1559
+(u'of', u'modern') 17.1729
+(u'rt', u'a') 17.1769
+loves 17.2236
+(u'modern', u'technology') 18.5409
+via 19.0267
+modern 19.4472
+news 22.7675
+profit 23.032
+blackberry 43.1003
+
+
+lag:40
+Least-----------------------------------------------------------
+(u'this', u'is') -107.8687
+fn -84.1323
+(u'this', u'kind', u'of') -74.4993
+(u'this', u'kind') -74.4993
+(u'kind', u'of') -74.4116
+particular -66.3887
+(u'this', u'particular') -63.531
+(u'now', u'this') -61.4246
+haha -55.4694
+expensive -51.3592
+(u'too', u'expensive') -51.1165
+lol -45.4826
+cant -45.2784
+funny -42.7355
+omfg -40.7863
+omg -38.9157
+goalline -38.136
+(u'goalline', u'technology') -36.9608
+(u'this', u'really') -35.7702
+platini -35.5057
+Most-----------------------------------------------------------
+(u'government', u'needs') 17.4884
+(u'closer', u'to', u'government') 17.6804
+(u'to', u'government') 17.6804
+(u'brings', u'startups', u'closer') 17.6829
+(u'startups', u'closer', u'to') 17.6829
+(u'startups', u'closer') 17.6829
+(u'hub', u'brings', u'startups') 17.7239
+(u'brings', u'startups') 17.7239
+(u'to', u'government', u'needs') 17.7763
+(u'hub', u'brings') 17.7838
+(u'technology', u'hub', u'brings') 17.7838
+(u'closer', u'to') 17.9082
+closer 18.1128
+startups 18.6005
+people 20.2246
+amp 21.0335
+via 21.087
+government 21.195
+blackberry 37.5182
+
+
+lag:50
+Least-----------------------------------------------------------
+(u'this', u'is') -113.5989
+fn -90.1651
+(u'kind', u'of') -77.1138
+(u'this', u'kind', u'of') -77.0163
+(u'this', u'kind') -77.0163
+particular -71.7625
+(u'this', u'particular') -68.57
+(u'now', u'this') -65.8154
+expensive -60.8896
+(u'too', u'expensive') -60.4108
+haha -58.5412
+lol -47.5339
+cant -45.025
+funny -44.8927
+goalline -43.0342
+omg -42.126
+(u'goalline', u'technology') -41.853
+omfg -41.5038
+platini -41.2099
+(u'this', u'really') -39.525
+Most-----------------------------------------------------------
+jobs 10.0584
+data 10.0686
+cyprus 10.1662
+market 10.1931
+government 10.2072
+people 10.8325
+services 11.0702
+(u'stocks', u'open') 11.2294
+(u'of', u'technology') 11.3945
+inc 11.5646
+trading 11.8206
+business 12.31
+mobile 12.9968
+(u'us', u'stocks') 13.9664
+news 15.8716
+profit 17.1991
+amp 23.7206
+via 29.2555
+blackberry 42.2669
+
+
+lag:60
+Least-----------------------------------------------------------
+(u'this', u'is') -141.7153
+fn -110.5827
+(u'kind', u'of') -96.1465
+(u'this', u'kind', u'of') -95.8511
+(u'this', u'kind') -95.8511
+particular -87.5214
+(u'this', u'particular') -83.8206
+(u'now', u'this') -79.7492
+haha -74.0369
+expensive -63.8082
+(u'too', u'expensive') -63.3563
+lol -60.6494
+funny -54.5112
+omfg -54.4494
+cant -54.1713
+omg -50.865
+(u'this', u'really') -48.0267
+actually -47.0044
+(u'can', u'be') -44.9166
+(u'now', u'this', u'is') -44.3176
+Most-----------------------------------------------------------
+alert 11.6955
+(u'as', u'cyprus') 11.6986
+(u'stocks', u'open') 12.1327
+(u'of', u'technology') 12.2529
+z10 12.8874
+28 13.0325
+global 13.6172
+inc 13.735
+stock 15.0195
+cyprus 16.0856
+(u'us', u'stocks') 16.7057
+data 16.9464
+million 18.4036
+trading 19.3778
+amp 23.7427
+profit 26.2504
+news 27.9022
+via 31.8697
+blackberry 52.3765
+
+
+lag:70
+Least-----------------------------------------------------------
+(u'this', u'is') -130.1071
+fn -102.5305
+(u'kind', u'of') -90.912
+(u'this', u'kind', u'of') -90.7871
+(u'this', u'kind') -90.7871
+particular -79.7691
+(u'this', u'particular') -75.9855
+(u'now', u'this') -75.7568
+haha -69.8633
+expensive -59.5846
+(u'too', u'expensive') -59.316
+lol -54.2872
+cant -51.1342
+omfg -49.9975
+funny -48.9373
+omg -48.0048
+actually -46.0497
+(u'this', u'really') -44.6456
+(u'now', u'this', u'is') -41.7698
+(u'can', u'be') -41.7117
+Most-----------------------------------------------------------
+(u'on', u'the') 14.32
+(u'as', u'cyprus') 15.5666
+global 15.8636
+google 15.9537
+(u'profit', u'as') 16.3554
+cyprus 16.5778
+(u'stocks', u'open') 16.7651
+sampp 16.8573
+million 17.8088
+(u'sampp', u'500') 17.9392
+trading 18.1979
+500 18.5953
+data 19.8775
+(u'us', u'stocks') 21.2116
+amp 22.1899
+via 24.173
+news 30.6782
+profit 40.2885
+blackberry 65.4985
+
+
+lag:80
+Least-----------------------------------------------------------
+(u'this', u'is') -121.5319
+fn -95.7056
+(u'kind', u'of') -81.9629
+(u'this', u'kind', u'of') -81.5924
+(u'this', u'kind') -81.5924
+particular -74.4735
+(u'this', u'particular') -71.1584
+(u'now', u'this') -68.5789
+haha -63.9037
+expensive -57.2898
+(u'too', u'expensive') -56.8682
+lol -51.9235
+omfg -46.7712
+funny -46.2426
+cant -45.8487
+actually -44.4092
+omg -42.5072
+(u'this', u'really') -41.5346
+brings -40.781
+goalline -38.7094
+Most-----------------------------------------------------------
+modern 13.4497
+dow 13.767
+cyprus 13.9505
+global 14.111
+(u'as', u'cyprus') 14.4322
+inc 14.5409
+million 15.1281
+trading 16.5984
+sampp 16.6582
+500 17.7775
+(u'sampp', u'500') 18.2054
+data 18.5573
+(u'stocks', u'open') 20.0395
+(u'us', u'stocks') 22.0682
+via 24.3125
+amp 24.5341
+news 29.8718
+profit 38.0526
+blackberry 68.8257
+
+
+lag:90
+Least-----------------------------------------------------------
+(u'this', u'is') -121.9258
+fn -94.0862
+(u'kind', u'of') -82.3152
+(u'this', u'kind', u'of') -81.5851
+(u'this', u'kind') -81.5851
+particular -72.0345
+(u'this', u'particular') -68.9141
+(u'now', u'this') -68.026
+haha -63.2038
+lol -49.9124
+expensive -47.3245
+(u'too', u'expensive') -46.539
+omfg -46.0105
+funny -45.5389
+cant -45.1397
+actually -44.2206
+omg -41.4209
+(u'this', u'really') -39.8438
+real -39.1304
+(u'can', u'be') -38.4967
+Most-----------------------------------------------------------
+(u'isnt', u'controlled') 16.066
+(u'loves', u'the', u'comforts') 16.066
+(u'the', u'comforts') 16.066
+(u'loves', u'the') 16.066
+(u'modern', u'technology', u'but') 16.101
+loves 16.1293
+trading 16.2354
+(u'of', u'modern') 16.2461
+modern 16.6776
+(u'stocks', u'open') 17.1612
+sampp 17.3177
+500 17.9398
+(u'sampp', u'500') 18.0702
+amp 21.1801
+via 21.8926
+(u'us', u'stocks') 22.4038
+news 31.3944
+profit 37.848
+blackberry 71.6014
+
+

@@ -93,7 +93,6 @@ for tstr in times:
     print 'classifying...'
     for col in tweet_collections:
         pos_score, neg_score, neut_score = 0, 0, 0
-        posl_score, negl_score, neutl_score = 0, 0, 0
         t = db[col].find()
         for tweet_object_index in range(t.count()):
             if tweet_object_index < t.count():
@@ -121,7 +120,6 @@ for tstr in times:
             results_collection.insert({'collection': col, 'time': t[tweet_object_index]['time'], 'text': t[tweet_object_index]['text'], 'sent': label})
 
         print "Pos: " + str(pos_score) + " | Neg: " + str(neg_score) + " | Neut: " + str(neut_score)
-        # results_collection.insert({'pos': str(pos_score), 'neg': str(neg_score)})object
-        # print "Pos pattern: " + str(posl_score) + " | Neg pattern: " + str(negl_score) + " | Neut: " + str(neutl_score)
+        results_collection.insert({'pos': str(pos_score), 'neg': str(neg_score)})
 
 print 'classification time: ' + str(time.time() - start_time) + ' seconds'

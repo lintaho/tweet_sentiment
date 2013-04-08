@@ -1,0 +1,396 @@
+lag:10
+Least-----------------------------------------------------------
+(u'stocks', u'to', u'watch') -6.2748
+falls -5.2841
+(u'stocks', u'to') -5.2538
+(u'to', u'watch') -5.0026
+(u'street', u'falls') -4.4477
+(u'watch', u'stocks') -3.9961
+(u'to', u'watch', u'stocks') -3.9961
+(u'watch', u'stocks', u'to') -3.9961
+turnaround -3.7658
+mayer -3.722
+(u'remain', u'in', u'spotlight') -3.7198
+(u'to', u'watch', u'blackberry') -3.7198
+(u'to', u'remain', u'in') -3.7198
+(u'blackberry', u'to') -3.7198
+(u'remain', u'in') -3.7198
+(u'watch', u'blackberry', u'to') -3.7198
+(u'watch', u'blackberry') -3.7198
+(u'blackberry', u'to', u'remain') -3.7198
+(u'marissa', u'mayer') -3.7019
+(u'the', u'marissa', u'mayer') -3.6959
+Most-----------------------------------------------------------
+(u'stocks', u'open', u'higher') 16.2735
+(u'stocks', u'open') 16.2771
+(u'open', u'higher') 16.308
+indoor 16.3117
+yahoo 20.0687
+deal 20.147
+acquires 23.0151
+(u'apple', u'buys', u'indoormapping') 23.7452
+indoormapping 23.8568
+(u'buys', u'indoormapping') 23.8933
+(u'buys', u'indoormapping', u'company') 23.8945
+(u'indoormapping', u'company') 23.8945
+(u'apple', u'buys') 27.0979
+buys 28.6742
+app 28.9527
+company 29.5934
+uk 30.7062
+cyprus 31.2157
+apple 42.9752
+
+
+lag:20
+Least-----------------------------------------------------------
+(u'cyprus', u'and') -13.4442
+(u'for', u'millions') -12.8604
+reached -12.7298
+lifts -12.4994
+agreement -12.37
+(u'deal', u'lifts') -12.2889
+(u'cyprus', u'deal', u'lifts') -12.2889
+(u'deal', u'lifts', u'stocks') -12.2889
+(u'lifts', u'stocks') -12.2889
+(u'advanced', u'to') -12.1716
+(u'11thhour', u'bailout', u'agreement') -12.0976
+(u'11thhour', u'bailout') -12.0976
+teens -12.0932
+(u'app', u'bought') -12.0908
+(u'stocks', u'advanced', u'to') -12.0776
+(u'advanced', u'to', u'start') -12.0776
+(u'an', u'11thhour') -12.0476
+(u'stocks', u'advanced') -12.0476
+(u'an', u'11thhour', u'bailout') -12.0476
+(u'uk', u'teens') -12.0266
+Most-----------------------------------------------------------
+(u'makes', u'its', u'first') 33.1987
+(u'first', u'significant') 33.1987
+(u'apple', u'makes') 33.1987
+(u'significant', u'push') 33.2187
+(u'first', u'significant', u'push') 33.2187
+significant 33.3561
+(u'indoor', u'mapping') 37.7803
+mapping 39.3239
+indoor 39.6441
+acquires 42.8801
+(u'apple', u'buys', u'indoormapping') 54.8044
+(u'buys', u'indoormapping', u'company') 54.9759
+(u'indoormapping', u'company') 54.9759
+indoormapping 56.1382
+(u'buys', u'indoormapping') 56.1661
+(u'apple', u'buys') 61.8541
+company 63.7212
+buys 65.9369
+apple 100.058
+
+
+lag:30
+Least-----------------------------------------------------------
+(u'for', u'millions') -26.7899
+(u'uk', u'teens') -26.0212
+(u'app', u'bought') -25.6386
+(u'uk', u'teens', u'app') -25.6326
+(u'teens', u'app') -25.6235
+(u'teens', u'app', u'bought') -25.6012
+(u'app', u'bought', u'for') -25.6012
+teens -25.5933
+(u'bought', u'for', u'millions') -25.5161
+(u'bought', u'for') -25.4848
+bought -25.1452
+millions -19.7867
+(u'for', u'millions', u'yahoo') -18.9828
+(u'millions', u'yahoo') -18.9828
+(u'millions', u'yahoo', u'has') -18.9718
+app -14.0895
+acquired -13.7567
+(u'stocks', u'cut') -13.5418
+cut -13.4653
+(u'acquired', u'an', u'app') -13.3875
+Most-----------------------------------------------------------
+(u'first', u'significant', u'push') 21.7314
+push 21.9206
+makes 22.9475
+via 25.7256
+(u'indoor', u'mapping') 27.9519
+mapping 28.9086
+deal 29.379
+indoor 29.8356
+cyprus 33.6684
+acquires 34.9438
+(u'buys', u'indoormapping', u'company') 38.5187
+(u'indoormapping', u'company') 38.5187
+(u'apple', u'buys', u'indoormapping') 38.5932
+(u'buys', u'indoormapping') 39.821
+indoormapping 40.1758
+(u'apple', u'buys') 46.344
+company 47.2568
+buys 50.2562
+apple 73.9614
+
+
+lag:40
+Least-----------------------------------------------------------
+(u'for', u'millions') -12.107
+bought -11.7271
+(u'uk', u'teens') -11.688
+(u'uk', u'teens', u'app') -11.2085
+(u'teens', u'app') -11.1767
+(u'bought', u'for') -11.1357
+(u'app', u'bought') -11.1062
+teens -11.0963
+europe -11.0671
+(u'bought', u'for', u'millions') -11.0348
+(u'teens', u'app', u'bought') -11.0292
+(u'app', u'bought', u'for') -11.0292
+(u'fall', u'on') -10.7945
+(u'stocks', u'fall', u'on') -10.759
+(u'us', u'stocks', u'fall') -10.511
+concern -10.0453
+(u'on', u'broad', u'concern') -9.6544
+(u'broad', u'concern') -9.6544
+(u'broad', u'concern', u'about') -9.6544
+(u'concern', u'about') -9.6544
+Most-----------------------------------------------------------
+(u'first', u'significant', u'push') 24.7256
+(u'its', u'first') 24.7491
+makes 26.5453
+cyprus 29.4584
+via 29.5474
+deal 30.6178
+(u'indoor', u'mapping') 32.7671
+mapping 33.752
+acquires 34.3579
+indoor 35.5416
+(u'buys', u'indoormapping', u'company') 45.2376
+(u'indoormapping', u'company') 45.2376
+(u'apple', u'buys', u'indoormapping') 45.2527
+(u'buys', u'indoormapping') 46.4028
+indoormapping 46.6262
+(u'apple', u'buys') 54.4917
+company 55.5284
+buys 57.5659
+apple 87.6605
+
+
+lag:50
+Least-----------------------------------------------------------
+europe -14.216
+(u'us', u'stocks', u'fall') -12.4583
+fall -12.4474
+(u'stocks', u'fall', u'on') -12.2686
+(u'fall', u'on') -12.2486
+(u'stocks', u'fall') -11.9247
+broad -11.0928
+(u'on', u'broad', u'concern') -10.9441
+(u'broad', u'concern') -10.9441
+(u'broad', u'concern', u'about') -10.9441
+(u'concern', u'about') -10.9441
+concern -10.8765
+(u'fall', u'on', u'broad') -10.8711
+(u'on', u'broad') -10.8711
+(u'about', u'europe') -10.6321
+(u'concern', u'about', u'europe') -10.6321
+(u'street', u'falls') -10.0311
+falls -9.7559
+(u'millions', u'yahoo', u'has') -7.8307
+(u'for', u'millions', u'yahoo') -7.7677
+Most-----------------------------------------------------------
+(u'first', u'significant') 36.0289
+(u'apple', u'makes') 36.0289
+push 36.5593
+makes 40.0757
+acquires 42.9577
+(u'indoor', u'mapping') 43.8497
+mapping 45.2566
+indoor 46.9754
+deal 47.7998
+cyprus 52.8408
+(u'buys', u'indoormapping', u'company') 62.5423
+(u'indoormapping', u'company') 62.5423
+(u'apple', u'buys', u'indoormapping') 62.6883
+indoormapping 64.191
+(u'buys', u'indoormapping') 64.2329
+(u'apple', u'buys') 73.7565
+buys 74.0138
+company 74.8315
+apple 118.2567
+
+
+lag:60
+Least-----------------------------------------------------------
+(u'stocks', u'fall') -17.0793
+fall -16.7698
+europe -16.4356
+(u'fall', u'on') -15.347
+(u'stocks', u'fall', u'on') -15.313
+broad -14.4308
+(u'us', u'stocks', u'fall') -14.3906
+(u'on', u'broad', u'concern') -13.3286
+(u'broad', u'concern') -13.3286
+(u'broad', u'concern', u'about') -13.3286
+(u'concern', u'about') -13.3286
+(u'fall', u'on', u'broad') -13.2116
+(u'on', u'broad') -13.2116
+(u'about', u'europe') -13.0031
+(u'concern', u'about', u'europe') -13.0031
+(u'street', u'falls') -12.8304
+concern -12.4966
+falls -12.1011
+(u'wall', u'street', u'falls') -10.4607
+18m -9.9534
+Most-----------------------------------------------------------
+(u'apple', u'makes') 40.0096
+push 41.1363
+(u'cyprus', u'deal') 42.8733
+makes 44.001
+(u'indoor', u'mapping') 45.2261
+mapping 47.2789
+indoor 47.6258
+acquires 48.316
+deal 64.2368
+(u'buys', u'indoormapping', u'company') 68.0635
+(u'indoormapping', u'company') 68.0635
+(u'apple', u'buys', u'indoormapping') 68.2075
+indoormapping 70.0934
+(u'buys', u'indoormapping') 70.2484
+buys 75.8053
+(u'apple', u'buys') 76.2565
+company 79.2903
+cyprus 86.9934
+apple 124.7431
+
+
+lag:70
+Least-----------------------------------------------------------
+fall -15.9952
+(u'stocks', u'fall') -15.8734
+(u'stocks', u'fall', u'on') -14.1367
+europe -14.1341
+(u'fall', u'on') -14.1267
+(u'us', u'stocks', u'fall') -13.8061
+broad -13.5709
+18m -13.0277
+(u'street', u'falls') -12.845
+(u'on', u'broad', u'concern') -11.9369
+(u'fall', u'on', u'broad') -11.9369
+(u'on', u'broad') -11.9369
+(u'broad', u'concern') -11.9369
+(u'broad', u'concern', u'about') -11.9369
+(u'concern', u'about') -11.9369
+(u'about', u'europe') -11.7479
+(u'concern', u'about', u'europe') -11.7479
+concern -11.5526
+(u'for', u'18m') -11.183
+(u'wall', u'street', u'falls') -10.5513
+Most-----------------------------------------------------------
+makes 38.6252
+app 39.6692
+(u'indoor', u'mapping') 42.0916
+mapping 43.9777
+indoor 44.6502
+(u'cyprus', u'deal') 49.2566
+acquires 50.4496
+uk 58.0967
+(u'buys', u'indoormapping', u'company') 66.7218
+(u'indoormapping', u'company') 66.7218
+(u'apple', u'buys', u'indoormapping') 67.021
+(u'buys', u'indoormapping') 68.9839
+indoormapping 69.0774
+buys 72.8075
+deal 73.0583
+(u'apple', u'buys') 75.4325
+company 77.8767
+cyprus 101.6623
+apple 118.4998
+
+
+lag:80
+Least-----------------------------------------------------------
+fall -21.6229
+(u'stocks', u'fall') -18.7057
+(u'fall', u'on') -14.9298
+(u'stocks', u'fall', u'on') -14.9298
+europe -14.2578
+(u'us', u'stocks', u'fall') -13.9613
+broad -13.799
+18m -13.7699
+(u'broad', u'concern') -11.9736
+(u'broad', u'concern', u'about') -11.9736
+(u'concern', u'about') -11.9736
+(u'on', u'broad', u'concern') -11.9736
+(u'fall', u'on', u'broad') -11.9736
+(u'on', u'broad') -11.9736
+(u'about', u'europe') -11.8065
+(u'concern', u'about', u'europe') -11.8065
+concern -11.7922
+(u'for', u'18m') -11.6739
+(u'app', u'from') -10.8918
+(u'news', u'app', u'from') -10.279
+Most-----------------------------------------------------------
+(u'cyprus', u'deal') 44.4976
+(u'indoor', u'mapping') 47.7333
+mapping 49.7422
+indoor 50.7388
+yahoo 59.0291
+acquires 66.4786
+deal 72.372
+(u'buys', u'indoormapping', u'company') 74.9468
+(u'indoormapping', u'company') 74.9468
+(u'apple', u'buys', u'indoormapping') 75.1488
+app 75.8615
+(u'buys', u'indoormapping') 77.5233
+indoormapping 77.546
+buys 82.1721
+(u'apple', u'buys') 83.6686
+company 86.3107
+cyprus 91.6475
+uk 93.1987
+apple 132.9324
+
+
+lag:90
+Least-----------------------------------------------------------
+fall -19.4955
+(u'stocks', u'fall') -15.4877
+18m -14.9537
+(u'fall', u'on') -13.3139
+(u'stocks', u'fall', u'on') -13.3139
+europe -13.0758
+(u'street', u'falls') -12.7304
+(u'for', u'18m') -12.6662
+(u'app', u'from') -11.6408
+broad -11.4007
+(u'buys', u'summly') -10.7649
+(u'wall', u'street', u'falls') -10.7039
+(u'news', u'app', u'from') -10.6515
+(u'yahoo', u'buys', u'summly') -10.5299
+(u'app', u'from', u'teenager') -10.4897
+(u'us', u'stocks', u'fall') -10.4886
+(u'summly', u'news', u'app') -10.4791
+(u'buys', u'summly', u'news') -10.4716
+(u'from', u'teenager', u'for') -10.4302
+(u'teenager', u'for', u'18m') -10.3867
+Most-----------------------------------------------------------
+push 48.0024
+(u'indoor', u'mapping') 51.2805
+mapping 52.9968
+indoor 54.5758
+deal 61.371
+yahoo 63.0975
+cyprus 70.5541
+app 75.5169
+acquires 77.2169
+(u'buys', u'indoormapping', u'company') 80.045
+(u'indoormapping', u'company') 80.045
+(u'apple', u'buys', u'indoormapping') 80.2531
+indoormapping 82.3671
+(u'buys', u'indoormapping') 82.479
+buys 85.7471
+(u'apple', u'buys') 88.8988
+company 90.0571
+uk 95.2343
+apple 140.0706
+
+

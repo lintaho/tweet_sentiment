@@ -26,7 +26,7 @@ while True:
     if '0830' <= now <= '1500' and day < 5:
         collection = db['tech' + datetime.now().strftime('%U%w')]
         for x in range(327):
-            print 'Time remaining: ' + str(datetime.timedelta(seconds=(327 - x) * 11))
+            # print 'Time remaining: ' + str(datetime.timedelta(seconds=(327 - x) * 11))
             try:
                 tweets = \
                     t.search(q=query,
