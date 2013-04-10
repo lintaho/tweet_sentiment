@@ -115,7 +115,7 @@ lags = [10, 20, 30, 40, 50, 60, 70, 80, 90]  # various lags we will test minutes
 for lag in lags:
     lagged_prices = all_prices[0:len(all_prices) - lag]
     fixed_tweets = all_tweet_scores[lag:]
-    print len(lagged_prices), len(fixed_tweets)
+    # print len(lagged_prices), len(fixed_tweets)
     print str(sp.stats.pearsonr(lagged_prices, fixed_tweets)) + 'for lag: ' + str(lag)
 
 b = array(all_tweet_scores)

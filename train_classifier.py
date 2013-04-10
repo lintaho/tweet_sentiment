@@ -12,9 +12,12 @@ from nltk.corpus import stopwords
 from nltk.metrics import BigramAssocMeasures
 from nltk.probability import FreqDist, ConditionalFreqDist
 from svmutil import *
+import itertools
 
 def remove_stopwords(text):
-    return [w for w in text if not w in stopwords.words('english')]
+    r = stopwords.words('english')
+    r.append('rt')
+    return [w for w in text if not w in r]
 
 nltk.config_megam('.')
 
@@ -37,48 +40,50 @@ else:
 
 for tweet_object_index in range(s.count()):
     if tweet_object_index < count:
-        text = ' '.join(remove_stopwords(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\S+:\/\/\w+)", '', s[tweet_object_index]['text']).split()))
+        text = ' '.join(remove_stopwords(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\S+:\/\/\w+)", '', s[tweet_object_index]['text'].lower()).split()))
         neg_tweets.append((text, 'negative'))
     else:
         break
 
 for tweet_object_index in range(h.count()):
     if tweet_object_index < count:
-        text = ' '.join(remove_stopwords(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", '', h[tweet_object_index]['text']).split()))
+        text = ' '.join(remove_stopwords(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", '', h[tweet_object_index]['text'].lower()).split()))
         pos_tweets.append((text, 'positive'))
     else:
         break
 
 
-# negWords, posWords = [], []
-# for t in neg_tweets:
-#     negWords.append(t[0].split())
-# for t in pos_tweets:
-#     posWords.append(t[0].split())
+negWords, posWords = [], []
+negBg, posBg = [], []
+posTg, negTg = [], []
+for t in neg_tweets:
+    z = t[0].split()
+    negWords.append(z)
+    negBg.append(nltk.util.bigrams(z))
+    negTg.append(nltk.util.trigrams(z))
+for t in pos_tweets:
+    z = t[0].split()
+    posWords.append(z)
+    posBg.append(nltk.util.bigrams(z))
+    posTg.append(nltk.util.trigrams(z))
 
-# # print negWords
-# negWords = list(itertools.chain(*negWords))
-# posWords = list(itertools.chain(*posWords))
-
-
+negWords = list(itertools.chain(*negWords + negBg + negTg))
+posWords = list(itertools.chain(*posWords + posBg + posTg))
 
 def get_freqs(posWords, negWords):
     word_fd = FreqDist()
     cond_word_fd = ConditionalFreqDist()
     for word in posWords:
         # print word
-        word_fd.inc(word.lower())
-        cond_word_fd['pos'].inc(word.lower())
+        word_fd.inc(word)
+        cond_word_fd['pos'].inc(word)
     for word in negWords:
-        word_fd.inc(word.lower())
-        cond_word_fd['neg'].inc(word.lower())
+        word_fd.inc(word)
+        cond_word_fd['neg'].inc(word)
 
     pos_word_count = cond_word_fd['pos'].N()
     neg_word_count = cond_word_fd['neg'].N()
     total_word_count = pos_word_count + neg_word_count
-
-    # print pos_word_count, neg_word_count, total_word_count
-
     word_scores = {}
     for word, freq in word_fd.iteritems():
         pos_score = BigramAssocMeasures.chi_sq(cond_word_fd['pos'][word], (freq, pos_word_count), total_word_count)
@@ -88,17 +93,25 @@ def get_freqs(posWords, negWords):
 
 def find_best_words(word_scores, number):
     best_vals = sorted(word_scores.iteritems(), key=lambda (w, s): s, reverse=True)[:number]
-    best_words = set([w for w, s in best_vals])
+    bw = []
+    u, b, t = 0, 0, 0
+    for w, s in best_vals:
+        if type(w) == unicode:
+            bw.append(w)
+            u += 1
+        else:
+            bw.append(w)
+            if len(w) == 2:
+                b += 1
+            else:
+                t += 1
+    best_words = set(bw)
     return best_words
 
-def best_word_features(words):
-    return dict([('contains ' + word, True) for word in words if word in best_words])
-
-# best_words = find_best_words(word_scores, 1000)
-# bwf = best_word_features(best_words)
+best_words = find_best_words(get_freqs(posWords, negWords), 1000)
+del posWords, negWords
 
 tweets = []
-
 def add_XX_features():
     f = open('words.tff')
     p, n, neut = [], [], []
@@ -118,15 +131,23 @@ def add_XX_features():
     tweets.append((n, 'negative'))
     tweets.append((neut, 'netural'))
 
-def add_ngrams(tweetlist):
+def add_ngrams(tweetlist, v):
     t_list = []
+    ugs, bgs, tgs = 0, 0, 0
     for (words, sentiment) in tweetlist:
         words_filtered = [e.lower() for e in words.split() if len(e) >= 3]
         t_list.append((words_filtered, sentiment))
+        ugs += len(words_filtered)
         bg = nltk.util.bigrams(words_filtered)
+        bgs += len(bg)
         t_list.append((bg, sentiment))
         tg = nltk.util.trigrams(words_filtered)
+        tgs += len(tg)
         t_list.append((tg, sentiment))
+    if v:
+        print '#unigrams: ' + str(ugs)
+        print '#bigrams: ' + str(bgs)
+        print '#trigrams: ' + str(tgs)
     return t_list
 
 def get_words_in_tweets(tweets):
@@ -140,27 +161,31 @@ def get_word_features(wordlist):
     word_features = wordlist.keys()
     return word_features
 
-
 tweets = pos_tweets + neg_tweets
 ktweets = []
-if str(sys.argv[1]) == '3':
-    ktweets = tweets
+if len(sys.argv) > 3:
+    if str(sys.argv[3]) == '-k':
+        ktweets = tweets
+        random.shuffle(ktweets)
+
 num_trained = len(tweets)
 random.shuffle(tweets)
 test_tweets = tweets[:len(tweets) / 5]
 tweets = tweets[len(tweets) / 5:]
-tweets = add_ngrams(tweets)
-test_tweets = add_ngrams(test_tweets)
+tweets = add_ngrams(tweets, True)
+test_tweets = add_ngrams(test_tweets, False)
+
 del neg_tweets
 del pos_tweets
 
 #add_XX_features()
-word_features = get_word_features(get_words_in_tweets(tweets))
+# word_features = get_word_features(get_words_in_tweets(tweets))
+# print '#total features: ' + str(len(word_features))
 
 def extract_features(document):
     document_words = set(document)
     features = {}
-    for word in word_features:
+    for word in best_words:
         if type(word) is unicode or type(word) is str:
             txt = word
         else:
@@ -206,9 +231,10 @@ def get_svm_features(tweets, featureList):
         labels.append(label)
     return {'feature_vector': feature_vector, 'labels': labels}
 
-def k_fold_validation(k, tweets):
+def k_fold_validation(k, tweets, c):
     sets = []
-    acc = 0.0
+    values = [0, 0, 0, 0, 0]
+    tweets = add_ngrams(tweets, False)
     for i in range(k):
         sets.append(tweets[(len(tweets) / k * i):(len(tweets) / k * i + len(tweets) / k)])
     for i in range(k):
@@ -219,33 +245,30 @@ def k_fold_validation(k, tweets):
                 training_tweets.extend(sets[j])
         training_set = nltk.classify.apply_features(extract_features, training_tweets)
         test_set = nltk.classify.apply_features(extract_features, test_tweets)
+
         del training_tweets
         del test_tweets
         print 'training ' + str(len(training_set))
-        classifier = train_naive_bayes()
-        # classifier = train_maxent()
-        pos_score, neg_score, neut_score = 0, 0, 0
-        print 'finding accuracy...'
-        for i, tweet in enumerate(test_set):
-            label = classifier.classify(tweet[0])
-            if label == tweet[1]:
-                pos_score += 1
-            else:
-                neg_score += 1
-        # del training_set
-        acc = float(pos_score) / float(len(test_set))
-        print acc
-        save_classifier('classifier_xfold' + str(acc) + '.pickle', classifier)
-
-
+        if c == 'SVM':
+            classifier = train_svm()
+            s = show_stats(classifier, c, test_set)
+        elif c == 'ME':
+            classifier = train_maxent()
+            s = show_stats(classifier, c, test_set)
+        elif c == 'NB':
+            classifier = train_naive_bayes()
+            s = show_stats(classifier, c, test_set)
+        values = [x + y for x, y in zip(values, s)]
+        # save_classifier('classifier_xfold' + str(acc) + '.pickle', classifier)
+        del training_set, test_set, classifier
+    print [z / k for z in values]
 
 training_set = nltk.classify.apply_features(extract_features, tweets)
 test_set = nltk.classify.apply_features(extract_features, test_tweets)
 
-
 def train_svm():
     print 'training svm classifier with ' + str(num_trained) + ' tweets'
-    result = get_svm_features(tweets, word_features)
+    result = get_svm_features(tweets, best_words)
     problem = svm_problem(result['labels'], result['feature_vector'])
     param = svm_parameter('-q')
 
@@ -254,18 +277,18 @@ def train_svm():
 
     param.kernel_type = LINEAR
     classifier = svm_train(problem, param)
+    print 'training time: ' + str(time.time() - start_time) + ' seconds'
     # svm_save_model('classifier_SVM_x.model', classifier)
-    test_feature_vector = get_svm_features(test_tweets, word_features)
-    # print test_feature_vector
-    p_labels, p_accs, p_vals = svm_predict(test_feature_vector['labels'], test_feature_vector['feature_vector'], classifier)
-    pf, pr, pp = calc_prec_recall_svm(test_feature_vector['labels'], p_labels, 1)
-    nf, nr, np = calc_prec_recall_svm(test_feature_vector['labels'], p_labels, 0)
-    print 'pos precision: ', str(pp)
-    print 'pos recall: ', str(pr)
-    print 'pos fscore: ', str(pf)
-    print 'neg precision: ', str(np)
-    print 'neg recall: ', str(nr)
-    print 'neg fscore: ', str(pf)
+    # test_feature_vector = get_svm_features(test_tweets, best_words)
+    # p_labels, p_accs, p_vals = svm_predict(test_feature_vector['labels'], test_feature_vector['feature_vector'], classifier)
+    # pf, pr, pp = calc_prec_recall_svm(test_feature_vector['labels'], p_labels, 1)
+    # nf, nr, np = calc_prec_recall_svm(test_feature_vector['labels'], p_labels, 0)
+    # print 'pos precision: ', str(pp)
+    # print 'pos recall: ', str(pr)
+    # print 'pos fscore: ', str(pf)
+    # print 'neg precision: ', str(np)
+    # print 'neg recall: ', str(nr)
+    # print 'neg fscore: ', str(pf)
     return classifier
 
 def train_naive_bayes():
@@ -278,19 +301,19 @@ def train_maxent():
     classifier = nltk.classify.maxent.MaxentClassifier.train(training_set, 'megam', trace=3, encoding=None, labels=None, sparse=True, gaussian_prior_sigma=0, max_iter=10)
     return classifier
 
-def calc_prec_recall_svm(ty, pv, sign):
+def calc_prec_recall_svm(tv, pv, sign):
         tp = 0.0
         fp = 0.0
         fn = 0.0
         #sign 1 = pos, 0 = neg
-        for i in range(len(ty)):
-            if pv[i] == sign and ty[i] == sign:
+        for i in range(len(tv)):
+            if pv[i] == sign and tv[i] == sign:
                     tp += 1
             else:
-                if pv[i] == sign and ty[i] != sign:
+                if pv[i] == sign and tv[i] != sign:
                     fp += 1
                 else:
-                    if pv[i] != sign and ty[i] == sign:
+                    if pv[i] != sign and tv[i] == sign:
                         fn += 1
         if tp + fp == 0:
             precision = 0
@@ -334,30 +357,74 @@ def calc_prec_recall(classifier):
     print 'neg precision: ', np
     print 'neg recall: ', nr
     print 'neg fscore: ', str(neg_fscore)
+    return pos_fscore, pr, pp, neg_fscore, nr, np
 
-def show_stats(classifier):
-    classifier.show_most_informative_features(10)
+def show_stats(classifier, c, test_set):
     print 'training time: ' + str(time.time() - start_time) + ' seconds'
-    print 'accuracy: ' + str(nltk.classify.accuracy(classifier, test_set))
+    p, n, pos_score, neg_score = 0, 0, 0, 0
+    if c == 'SVM':
+        test_feature_vector = get_svm_features(test_tweets, best_words)
+        print 'finding accuracy...'
+        p_labels, acc, p_vals = svm_predict(test_feature_vector['labels'], test_feature_vector['feature_vector'], classifier)
+        pf, pr, pp = calc_prec_recall_svm(test_feature_vector['labels'], p_labels, 1)
+        nf, nr, np = calc_prec_recall_svm(test_feature_vector['labels'], p_labels, 0)
+        print 'pos precision: ', str(pp)
+        print 'pos recall: ', str(pr)
+        print 'pos fscore: ', str(pf)
+        print 'neg precision: ', str(np)
+        print 'neg recall: ', str(nr)
+        print 'neg fscore: ', str(pf)
+        for v in p_labels:
+            if v == 1:
+                p += 1
+            elif v == 0:
+                n += 1
+        acc = acc[0] / 100
+    else:
+        classifier.show_most_informative_features(10)
+        pf, pr, pp, nf, nr, np = calc_prec_recall(classifier)
+        print 'finding accuracy...'
+        for i, tweet in enumerate(test_set):
+            label = classifier.classify(tweet[0])
+            if label == 'positive':
+                p += 1
+            else:
+                n += 1
+            if label == tweet[1]:
+                pos_score += 1
+            else:
+                neg_score += 1
+        acc = float(pos_score) / float(len(test_set))
+    print 'accuracy: ' + str(acc)
+    print '#pos= ' + str(p) + ' || #neg= ' + str(n)
+    return acc, pr, pp, nr, np
+
+
+if len(sys.argv) > 4:
+    if str(sys.argv[3]) == '-k':
+        if str(sys.argv[1]) == '1':
+            k_fold_validation(int(sys.argv[4]), ktweets, 'SVM')
+        elif str(sys.argv[1]) == '2':
+            k_fold_validation(int(sys.argv[4]), ktweets, 'ME')
+        elif str(sys.argv[1]) == '0':
+            k_fold_validation(int(sys.argv[4]), ktweets, 'NB')
+    sys.exit()
 
 if str(sys.argv[1]) == '1':
     classifier = train_svm()
-
+    show_stats(classifier, 'SVM', test_set)
     svm_save_model('classifier_SVM.model', classifier)
-    save_features('features_SVM.pickle', word_features)
+
+    save_features('features_SVM.pickle', best_words)
     #m = svm_load_model('libsvm.model')
 
 elif str(sys.argv[1]) == '2':
     classifier = train_maxent()
-    calc_prec_recall(classifier)
-    show_stats(classifier)
+    show_stats(classifier, 'ME', test_set)
     save_classifier('classifier_ME.pickle', classifier)
-    save_features('features.pickle', word_features)
+    save_features('features.pickle', best_words)
 elif str(sys.argv[1]) == '0':
     classifier = train_naive_bayes()
-    calc_prec_recall(classifier)
-    show_stats(classifier)
+    show_stats(classifier, 'NB', test_set)
     save_classifier('classifier_NB.pickle', classifier)
-    save_features('features_NB.pickle', word_features)
-elif str(sys.argv[1]) == '3':
-    k_fold_validation(4, ktweets)
+    save_features('features_NB.pickle', best_words)
