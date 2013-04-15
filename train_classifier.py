@@ -167,13 +167,13 @@ def add_ngrams(tweetlist, v):
         words_filtered = [e.lower() for e in words.split() if len(e) >= 3]
         t_list.append((words_filtered, sentiment))
         ugs += len(words_filtered)
-        # if v:
-        bg = nltk.util.bigrams(words_filtered)
-        bgs += len(bg)
-        t_list.append((bg, sentiment))
-        tg = nltk.util.trigrams(words_filtered)
-        tgs += len(tg)
-        t_list.append((tg, sentiment))
+        if v:
+            bg = nltk.util.bigrams(words_filtered)
+            bgs += len(bg)
+            t_list.append((bg, sentiment))
+            tg = nltk.util.trigrams(words_filtered)
+            tgs += len(tg)
+            t_list.append((tg, sentiment))
     if v:
         print '#unigrams: ' + str(ugs)
         print '#bigrams: ' + str(bgs)
@@ -200,8 +200,8 @@ if len(sys.argv) > 3:
 
 num_trained = len(tweets)
 random.shuffle(tweets)
-test_tweets = tweets[:len(tweets) / 5]
-tweets = tweets[len(tweets) / 5:]
+test_tweets = tweets[:len(tweets) / 4]
+tweets = tweets[len(tweets) / 4:]
 tweets = add_ngrams(tweets, True)
 test_tweets = add_ngrams(test_tweets, False)
 
