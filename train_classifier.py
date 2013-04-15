@@ -13,6 +13,7 @@ from nltk.metrics import BigramAssocMeasures
 from nltk.probability import FreqDist, ConditionalFreqDist
 from svmutil import *
 import itertools
+import math
 
 def remove_stopwords(text):
     r = stopwords.words('english')
@@ -67,6 +68,32 @@ for t in pos_tweets:
     posBg.append(nltk.util.bigrams(z))
     posTg.append(nltk.util.trigrams(z))
 
+
+def tf(word, tweet):
+    return tweet.count(word) / float(len(tweet))
+
+def idf(word, tweetlist):
+    count = 0
+    for tweet in tweetlist:
+        if tweet.count(word) > 0:
+            count += 1
+    if count == 0:
+        return math.log(1)
+    return math.log(len(tweetlist) / count)
+
+def calc_tfidf(word, tweet, tweetlist):
+    return tf(word, tweet) * idf(word, tweetlist)
+
+tfidf = {}
+for tweet in negWords + negBg + negTg + posWords + posBg + posTg:
+    # print tweet
+    for gram in tweet:
+        # print gram
+        if gram in tfidf:
+            tfidf[gram] += calc_tfidf(gram, tweet, negWords + negBg + negTg + posWords + posBg + posTg)
+        else:
+            tfidf[gram] = calc_tfidf(gram, tweet, negWords + negBg + negTg + posWords + posBg + posTg)
+
 negWords = list(itertools.chain(*negWords + negBg + negTg))
 posWords = list(itertools.chain(*posWords + posBg + posTg))
 
@@ -108,8 +135,10 @@ def find_best_words(word_scores, number):
     best_words = set(bw)
     return best_words
 
-best_words = find_best_words(get_freqs(posWords, negWords), 1000)
-del posWords, negWords
+# score = get_freqs(posWords, negWords)
+score = tfidf
+best_words = find_best_words(score, 5000)
+del posWords, negWords, posBg, negBg, posTg, negTg
 
 tweets = []
 def add_XX_features():
@@ -138,6 +167,7 @@ def add_ngrams(tweetlist, v):
         words_filtered = [e.lower() for e in words.split() if len(e) >= 3]
         t_list.append((words_filtered, sentiment))
         ugs += len(words_filtered)
+        # if v:
         bg = nltk.util.bigrams(words_filtered)
         bgs += len(bg)
         t_list.append((bg, sentiment))
@@ -245,13 +275,10 @@ def k_fold_validation(k, tweets, c):
                 training_tweets.extend(sets[j])
         training_set = nltk.classify.apply_features(extract_features, training_tweets)
         test_set = nltk.classify.apply_features(extract_features, test_tweets)
-
-        del training_tweets
-        del test_tweets
         print 'training ' + str(len(training_set))
         if c == 'SVM':
-            classifier = train_svm()
-            s = show_stats(classifier, c, test_set)
+            classifier = train_svm(training_tweets)
+            s = show_stats(classifier, c, test_set, test_tweets)
         elif c == 'ME':
             classifier = train_maxent()
             s = show_stats(classifier, c, test_set)
@@ -266,7 +293,9 @@ def k_fold_validation(k, tweets, c):
 training_set = nltk.classify.apply_features(extract_features, tweets)
 test_set = nltk.classify.apply_features(extract_features, test_tweets)
 
-def train_svm():
+print len(test_set), len(training_set)
+
+def train_svm(tweets):
     print 'training svm classifier with ' + str(num_trained) + ' tweets'
     result = get_svm_features(tweets, best_words)
     problem = svm_problem(result['labels'], result['feature_vector'])
@@ -277,7 +306,7 @@ def train_svm():
 
     param.kernel_type = LINEAR
     classifier = svm_train(problem, param)
-    print 'training time: ' + str(time.time() - start_time) + ' seconds'
+    # print 'training time: ' + str(time.time() - start_time) + ' seconds'
     # svm_save_model('classifier_SVM_x.model', classifier)
     # test_feature_vector = get_svm_features(test_tweets, best_words)
     # p_labels, p_accs, p_vals = svm_predict(test_feature_vector['labels'], test_feature_vector['feature_vector'], classifier)
@@ -359,10 +388,11 @@ def calc_prec_recall(classifier):
     print 'neg fscore: ', str(neg_fscore)
     return pos_fscore, pr, pp, neg_fscore, nr, np
 
-def show_stats(classifier, c, test_set):
+def show_stats(classifier, c, test_set, test_tweets=None):
     print 'training time: ' + str(time.time() - start_time) + ' seconds'
     p, n, pos_score, neg_score = 0, 0, 0, 0
     if c == 'SVM':
+
         test_feature_vector = get_svm_features(test_tweets, best_words)
         print 'finding accuracy...'
         p_labels, acc, p_vals = svm_predict(test_feature_vector['labels'], test_feature_vector['feature_vector'], classifier)
@@ -374,6 +404,7 @@ def show_stats(classifier, c, test_set):
         print 'neg precision: ', str(np)
         print 'neg recall: ', str(nr)
         print 'neg fscore: ', str(pf)
+
         for v in p_labels:
             if v == 1:
                 p += 1
@@ -411,8 +442,8 @@ if len(sys.argv) > 4:
     sys.exit()
 
 if str(sys.argv[1]) == '1':
-    classifier = train_svm()
-    show_stats(classifier, 'SVM', test_set)
+    classifier = train_svm(tweets)
+    show_stats(classifier, 'SVM', test_set, test_tweets)
     svm_save_model('classifier_SVM.model', classifier)
 
     save_features('features_SVM.pickle', best_words)
