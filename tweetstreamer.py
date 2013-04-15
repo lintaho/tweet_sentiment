@@ -10,10 +10,10 @@ connection = MongoClient('localhost', 27017)
 db = connection.data
 
 # Twitter API Info
-t = Twython(app_key='tukYVvz2d4MIG4KCxObMkA',
-            app_secret='uxJwgj45Qi1lbuqz6FuYcZJsTvpKG6fGab46BBsZ28',
-            oauth_token='49249889-yILZ38P5XB84kCV0ZvBY2X4iQg0FdrBxE02mAParR',
-            oauth_token_secret='hVKkn8jlIyUQbKPnWXnlmdL4j8iM7FDI7LFOtzX40'
+t = Twython(app_key='APPKEY',
+            app_secret='APPSECRET',
+            oauth_token='OAUTHTOKEN',
+            oauth_token_secret='OAUTHTOKENSECRET'
             )
 
 sid = None
