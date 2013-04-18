@@ -35,7 +35,7 @@ h = hap_col.find()
 pos_tweets, neg_tweets = [], []
 
 if len(sys.argv) > 2:
-    count = int(sys.argv[2])
+    count = int(sys.argv[2]) / 2
 else:
     count = 20
 
