@@ -141,8 +141,8 @@ best_words = find_best_words(score, 5000)
 del posWords, negWords, posBg, negBg, posTg, negTg
 
 tweets = []
-def add_XX_features():
-    f = open('words.tff')
+def add_external_lexicon():
+    f = open('lexicon/words.tff')
     p, n, neut = [], [], []
     for line in f.readlines():
         t = line.split(' ')
@@ -208,7 +208,6 @@ test_tweets = add_ngrams(test_tweets, False)
 del neg_tweets
 del pos_tweets
 
-#add_XX_features()
 # word_features = get_word_features(get_words_in_tweets(tweets))
 # print '#total features: ' + str(len(word_features))
 

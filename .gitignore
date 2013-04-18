@@ -1,9 +1,9 @@
 *.pyc
 .*
 *.pickle
-/tfidf
 *.txt
-calc_var.py
 *.odg
 *.model
 *.tex
+*.sh
+!tech_etfs.txt

@@ -3,6 +3,8 @@ from __future__ import print_function
 from pymongo import MongoClient
 import nltk
 import re
+from nltk.corpus import stopwords
+
 
 # MongoDB setup
 connection = MongoClient('localhost', 27017)
@@ -11,15 +13,8 @@ db_tweets = connection.data
 col_names = ['tech121', 'tech122', 'tech123', 'tech124', 'tech125']
 results_col_stocks = db_stocks['FDN']
 results_col_tweets = db_tweets['tech121']
-# Remove stopwords
-sw_file = open("stopwords.txt", "r")
-stop_words = []
-line = sw_file.readline()
-while line:
-    words = line.strip()
-    stop_words.append(words)
-    line = sw_file.readline()
-sw_file.close()
+
+stop_words = stopwords.words('english')
 stop_words.append('rt')
 stop_words.append('technology')
 stop_words.append('stocks')
