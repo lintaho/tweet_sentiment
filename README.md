@@ -17,8 +17,8 @@ Usage
 - OPTIONAL -k n, n-fold cross validation, n is the number of folds
 
 example: 
-<python train_classifier.py 2 5000 -k 4>
-    
+>python train_classifier.py 2 5000 -k 4
+
 will train a Maximum Entropy classifier on 5000 tweets (1/2 pos, 1/2 neg) with 4-fold cross validation
 
 Note- k-fold cross validation will not save the classifier. 
