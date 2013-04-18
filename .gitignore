@@ -7,3 +7,4 @@
 *.tex
 *.sh
 !tech_etfs.txt
+*emotion_tweet_miner.py

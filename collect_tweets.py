@@ -16,7 +16,7 @@ t = Twython(app_key='APPKEY',
             oauth_token_secret='OAUTHTOKENSECRET'
             )
 
-query = 'stocks OR economy'
+query = 'QUERY'
 sid = None
 num_hours = 5
 
