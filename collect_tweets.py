@@ -21,7 +21,6 @@ sid = None
 num_hours = 5
 
 for db_num in range(num_hours):
-    # collection = db['' + str(db_num)]
     for x in range(327):
         print 'Time remaining: ' + str(datetime.timedelta(seconds=(327 - x) * 11)) + ' on hour ' + str(db_num)
         try:

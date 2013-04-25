@@ -135,8 +135,9 @@ def find_best_words(word_scores, number):
     best_words = set(bw)
     return best_words
 
-# score = get_freqs(posWords, negWords)
-score = tfidf
+# chi squared vs. tfidf
+# score = get_freqs(posWords, negWords)  #chi squared
+score = tfidf  # tfidf
 best_words = find_best_words(score, 5000)
 del posWords, negWords, posBg, negBg, posTg, negTg
 
@@ -204,12 +205,8 @@ test_tweets = tweets[:len(tweets) / 4]
 tweets = tweets[len(tweets) / 4:]
 tweets = add_ngrams(tweets, True)
 test_tweets = add_ngrams(test_tweets, False)
-
 del neg_tweets
 del pos_tweets
-
-# word_features = get_word_features(get_words_in_tweets(tweets))
-# print '#total features: ' + str(len(word_features))
 
 def extract_features(document):
     document_words = set(document)
@@ -299,24 +296,10 @@ def train_svm(tweets):
     result = get_svm_features(tweets, best_words)
     problem = svm_problem(result['labels'], result['feature_vector'])
     param = svm_parameter('-q')
-
     # param.cross_validation = 1
     # param.nr_fold = 10
-
     param.kernel_type = LINEAR
     classifier = svm_train(problem, param)
-    # print 'training time: ' + str(time.time() - start_time) + ' seconds'
-    # svm_save_model('classifier_SVM_x.model', classifier)
-    # test_feature_vector = get_svm_features(test_tweets, best_words)
-    # p_labels, p_accs, p_vals = svm_predict(test_feature_vector['labels'], test_feature_vector['feature_vector'], classifier)
-    # pf, pr, pp = calc_prec_recall_svm(test_feature_vector['labels'], p_labels, 1)
-    # nf, nr, np = calc_prec_recall_svm(test_feature_vector['labels'], p_labels, 0)
-    # print 'pos precision: ', str(pp)
-    # print 'pos recall: ', str(pr)
-    # print 'pos fscore: ', str(pf)
-    # print 'neg precision: ', str(np)
-    # print 'neg recall: ', str(nr)
-    # print 'neg fscore: ', str(pf)
     return classifier
 
 def train_naive_bayes():
@@ -362,7 +345,6 @@ def calc_prec_recall(classifier):
     testSets = collections.defaultdict(set)
 
     for i, (features, label) in enumerate(test_set):
-        # print features, i
         referenceSets[label].add(i)
         predicted = classifier.classify(features)
         testSets[predicted].add(i)
@@ -439,15 +421,11 @@ if len(sys.argv) > 4:
         elif str(sys.argv[1]) == '0':
             k_fold_validation(int(sys.argv[4]), ktweets, 'NB')
     sys.exit()
-
 if str(sys.argv[1]) == '1':
     classifier = train_svm(tweets)
     show_stats(classifier, 'SVM', test_set, test_tweets)
     svm_save_model('classifier_SVM.model', classifier)
-
     save_features('features_SVM.pickle', best_words)
-    #m = svm_load_model('libsvm.model')
-
 elif str(sys.argv[1]) == '2':
     classifier = train_maxent()
     show_stats(classifier, 'ME', test_set)

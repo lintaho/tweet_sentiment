@@ -4,12 +4,11 @@ from pymongo import MongoClient
 import matplotlib.pyplot as plt
 from numpy import *
 from scipy import stats as sp
-import math
+
 # MongoDB setup
 connection = MongoClient('localhost', 27017)
 db_stocks = connection.trading_day_123
 db_tweets = connection.data
-# results_col = db[str(sys.argv[1])]
 results_col_stocks = db_stocks['XLK']
 results_col_tweets = db_tweets['results123']
 
@@ -23,7 +22,6 @@ lt = '083000'
 for minute in range(420):
     gt = "%02d" % (minute / 60 + 8) + ("%02d" % ((minute) % 60)) + '00'
     if gt > lt:
-        # print gt, lt
         s = results_col_stocks.find({'time': {'$gt': lt, '$lt': gt}})
         if s.count() != 0:
             for x in range(1):
@@ -33,11 +31,7 @@ for minute in range(420):
                 all_prices.append(float(all_prices[len(all_prices) - 1]))
             else:
                 all_prices.append(0.0)
-
-        # t = results_col_tweets.find({'time': {'$gt': lt, '$lt': gt}})
         lt = gt
-
-# print len(all_prices)
 
 prices = []
 times = []
@@ -63,18 +57,8 @@ for minute in range(420):
                     n += 1
             if (p + n) != 0:
                 r = float(p) / float(p + n)
-            # if n <= 1 or p <= 1:
-            #     if n <= 1 and p > 1:
-            #         r = math.log(p)
-            #     elif n > 1 and p > 1:
-            #         r = math.log(p) / math.log(n)
-            #     elif n > 1 and p <= 1:
-            #         r = 1 / math.log(n)
-            #     else:
-            #         r = 0.0
             else:
                 r = float(p)
-            # print r
             all_tweet_scores.append(r)
         else:  # if non tweets in that minute
             if len(all_tweet_scores) > 1:
@@ -82,40 +66,11 @@ for minute in range(420):
             else:
                 all_tweet_scores.append(0.0)
         lt = gt
-# print all_prices, all_tweet_scores
-# print len(all_prices), len(all_tweet_scores)
-# scores = []
-# t = results_col_stocks.find()
-# time = t[0]['time']
-# pos_score, neg_score = 0, 0
-# for tweet_index in range(t.count()):
-#     if 'sent' not in t[tweet_index]:
-#         continue
-#     sent = t[tweet_index]['sent']
-#     new_time = t[tweet_index]['time']
-#     if new_time == time:
-#         if sent == 'positive':
-#             pos_score += 1
-#         else:
-#             neg_score += 1
-#     else:
-#         if neg_score != 0:
-#             ratio = float(pos_score) / float(neg_score)
-#         else:
-#             ratio = 1.0
-#         scores.append(ratio)
-#         pos_score, neg_score = 0, 0
-#         if sent == 'positive':
-#             pos_score += 1
-#         else:
-#             neg_score += 1
-#         time = new_time
 
 lags = [10, 20, 30, 40, 50, 60, 70, 80, 90]  # various lags we will test minutes
 for lag in lags:
     lagged_prices = all_prices[0:len(all_prices) - lag]
     fixed_tweets = all_tweet_scores[lag:]
-    # print len(lagged_prices), len(fixed_tweets)
     print str(sp.stats.pearsonr(lagged_prices, fixed_tweets)) + 'for lag: ' + str(lag)
 
 b = array(all_tweet_scores)
