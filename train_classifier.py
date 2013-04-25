@@ -201,6 +201,12 @@ if len(sys.argv) > 3:
 
 num_trained = len(tweets)
 random.shuffle(tweets)
+
+if str(sys.argv[3]) != '-k':
+    split = sys.argv[3]
+else:
+    split = 1
+
 test_tweets = tweets[:len(tweets) / 4]
 tweets = tweets[len(tweets) / 4:]
 tweets = add_ngrams(tweets, True)
