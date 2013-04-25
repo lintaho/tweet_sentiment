@@ -203,7 +203,7 @@ num_trained = len(tweets)
 random.shuffle(tweets)
 
 if str(sys.argv[3]) != '-k':
-    split = sys.argv[3]
+    split = int(sys.argv[3])
 else:
     split = 1
 
